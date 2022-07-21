@@ -1,0 +1,54 @@
+.categoryContainer{
+    width: 94%;
+    /* position: fixed; */
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    margin-left: 47px;  
+    margin-right: 47px;
+    padding-top: 20px;
+    background-color: black;
+    padding-bottom: 20px;
+}
+
+.disableScrollbars::-webkit-scrollbar {
+    /* background: transparent;  */
+    background: black; /* Chrome/Safari/Webkit */
+    width: 0px;
+  }
+      
+.disableScrollbars {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE 10+ */
+  }
+
+
+.categoryBtn{
+    margin-left: 35px;
+    color: #A7A09C;
+    border: 1.6px solid #A7A09C;
+    border-radius: 20px;
+    font-weight: 400;
+    font-size: 1.1rem;
+    padding: 8px 12px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.categoryBtn:hover{
+    background: #F0F0F0;
+    color: #9B7D6A;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* .categoryBtnActive{
+    background: #F0F0F0;
+    color: #9B7D6A;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+} */
+
+.categoryBtnFirst{
+    margin-left: 0px !important;
+}

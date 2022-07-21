@@ -1,0 +1,74 @@
+
+.headerWrapper{
+    margin: 28px 20px 10px  47px;
+    background-color: #000000;
+}
+
+.sticky {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: #000000;
+}
+
+.headerContainer{
+    padding: 15px 47px 4px  47px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000000;
+    height: 70px;
+}
+
+.logoContainer > img{
+    width: 140px;
+    cursor: pointer;
+}
+
+.searchBarInput{
+    height: 32px;
+    width: 604px;
+    border-radius: 2px 0 0 2px;
+    border: 1px solid #886D5D;
+    background-color: transparent;
+    font-size: 16px;
+    font-weight: 400;
+    color: white ;
+    opacity: 0.6;
+    padding: 0 0 0 10px;
+}
+.searchBarInput:active{
+    opacity: 1;
+}
+.searchBarInput:focus-visible{
+    opacity: 1;
+    outline: 1px solid #886D5D;
+}
+.searchBtn{
+    cursor: pointer;
+    border: 1px solid #886D5D;
+    border-radius: 0 2px 2px 0;
+    background-color: transparent;
+    opacity: 0.6;
+    color: rgba(255, 255, 255, 0.6);
+    height: 34px;
+    width: 60px;
+    font-size: 15px;
+}
+
+
+.loginBtn{
+    width: 100px;
+    height: 36px;    
+    border-radius: 8px;
+    background: #B19D97;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.hrHeader{
+    border-color: #544138;
+}
+
+

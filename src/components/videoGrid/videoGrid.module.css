@@ -1,0 +1,64 @@
+.videoItemContainer{
+    display: flex;
+    flex-direction: column;
+    max-width: 330px;
+    width: 100%;
+    margin: 10px;
+}
+.videoThumbnail{
+    cursor: pointer;
+}
+.videoThumbnailWrapper > img{
+    /* width: 100%; */
+    object-fit: cover;
+    width: 360px;
+    height: 203px;
+}
+.videoThumbnail:hover{
+    cursor: pointer;
+    transform: scale(1.03);
+    transition: all 0.25s ease-in-out;
+    z-index: 1 !important;
+}
+.channelLogoWrapper{
+    display: flex;
+    align-items: center;
+}
+.channelLogoWrapper > img {
+    object-fit: cover;
+    width: 60px;
+    height: 60px;
+    border-radius: 100px;
+}
+
+.videoInfoContainer{
+    display: flex;
+    flex-direction: row;
+    height: 110px;
+    margin-top:5px;
+}
+
+.titleFollowContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: 8px 0 8px 12px;
+}
+
+.followBtn{
+    color: #B19D97;
+    border: 1.4px solid #B19D97;
+    border-radius: 20px;
+    font-weight: 400;
+    font-size: 1.1rem;
+    padding: 8px 6px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    width: 105px;
+}
+.followBtn:hover{
+    background: #9B7D6A;
+    color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}

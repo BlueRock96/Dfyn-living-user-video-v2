@@ -1,0 +1,180 @@
+.body{
+    background-color: black;
+    color: white;
+    min-height: 136vh;
+}
+.container{
+    margin-top: 100px;
+    padding-top: 35px;
+    margin-left: 47px;  
+    margin-right: 47px;
+    display: flex;
+    flex-direction: row;
+}
+
+.reactPlayer{
+    width: 100% !important;
+    /* height: auto !important; */
+    min-height: 488px !important;
+}
+
+.channelLogoWrapper{
+    display: flex;
+    align-items: center;
+    height: 66px;
+}
+.channelLogoWrapper > img {
+    object-fit: cover;
+    width: 60px;
+    height: 60px;
+    border-radius: 100px;
+}
+.videoInfo1Container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* height: 60px; */
+    margin-top: 25px;
+    align-items: center;
+    
+}
+
+.watchVideoContainer{
+    width: 60%;
+    padding: 10px;
+    margin-top: 49px;
+}
+.featuredVideosContainer{
+    width: 40%;
+    padding: 10px;
+
+}
+.titleViewsContainer{
+    display: flex;
+    flex-direction: column;
+    height: 50px;
+    justify-content: space-between;
+    margin: 12px 0px 15px 0px;
+}
+.logoDescriptionContainer{
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+}
+.descriptionContainer{
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 160px;
+    justify-content: space-between;
+}
+.channelInfoContainer{
+    display: flex;
+    flex-direction: column;
+    height: 45px;
+    justify-content: space-between;
+}
+
+.followBtn{
+    color: #B19D97;
+    border: 1.4px solid #B19D97;
+    border-radius: 20px;
+    font-weight: 400;
+    font-size: 1.1rem;
+    padding: 8px 6px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    width: 89px;
+    height: 37px;
+}
+.followBtn:hover{
+    background: #9B7D6A;
+    color: #FFFFFF;
+    border: 1.4px solid rgba(0, 0, 0, 0.1);
+}
+
+.videoTitle{
+    font-size: 1.25em;
+}
+.viewCount{
+    font-weight: 300;
+    opacity: 0.8;
+}
+.channelName{
+    font-size: 1.1em;
+    font-weight: 700;
+}
+
+.subscriberCount{
+    color: #858585;
+}
+.videoInfoContainer{
+    max-width: 90%;
+    margin-top: 30px;
+}
+
+.hrVideoInfo{
+    border: 1px solid rgba(128, 128, 128, 0.25);
+}
+.showMoreBtn{
+    margin-top: 5px;
+    color: #808080;
+    font-weight: 500;
+    font-size: 0.9em;
+    cursor: pointer;
+}
+
+
+/* Featured Video CSS */
+.featuredVideoText{
+    color: #CAB1A1;
+    font-weight: 400;
+    font-size: 1.4em;
+    margin-bottom: 30px;
+}
+
+.videoItemsContainer{
+    /* height: 100vh; */
+    height: 100%;
+    max-height: calc(100vh - 462px);
+    margin-top: 23px;
+}
+
+.videoItem{
+    cursor: pointer;
+    background: linear-gradient(180deg, #070707 0%, rgba(55, 43, 37, 0.76) 100%); 
+    display: flex;
+    flex-direction: row;
+    height: 121px;
+   transition: all 0.3s ease-in-out 0s;
+
+}
+.videoItem:hover{
+   background-color: rgb(233, 198, 206,0.6);
+}
+.videoItem:not(:last-child) { margin-bottom:15px; } 
+/* Not adding margin to last item, to avoid space */
+
+.thumbnailWrapper > img{
+    /* width: 100%; */
+    object-fit: cover;
+    width: 173px;
+    height: 121px;
+}
+.videoItemContentWrapper{
+    padding: 0 92px 0 20px;
+}
+
+.videoTitle{
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #FFFFFF;
+    line-height: 1.2rem;
+}
+.videoDescContainer{
+    font-size: 1rem;
+    font-weight: 400;
+    color: #808080;
+    margin-top: 15px;
+}

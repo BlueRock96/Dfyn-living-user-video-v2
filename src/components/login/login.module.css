@@ -1,0 +1,132 @@
+/* panel layout mechanics */
+.panelWrap {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 30em;
+    transition: .3s ease-out;
+    transform: translateX(100%);
+    
+    
+  }
+  .panel {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #f1dcc2;
+    overflow: auto;
+    padding: 1em 2em;
+
+  }
+  
+  /* simulate panel state control --
+  this can also be triggered by a 
+  class name added to the body tag. 
+  Just using a checkbox sibling here
+  for simplicity
+  */ 
+  [type="checkbox"]:checked ~ .panel-wrap {
+    transform: translateX(0%);
+  }
+ 
+
+.logoSectionContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.logoInner{
+  padding: 0.5rem;
+}
+
+.logoImg{
+  width: 5rem;
+}
+.logoInner{
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 60px;
+}
+.title{
+  font-family: 'Lato', sans-serif;
+  color: #B59888;
+  font-weight: 700;
+  font-size: 1.7rem;
+
+}
+.subtitle{
+  font-family: 'Lato', sans-serif;
+  color: #B59888;
+  font-size: 1rem;
+}
+
+.signinSection{
+  margin-top: 10%;
+}
+ 
+.signinTextTitle{
+  font-family: 'Poppins', sans-serif;
+  color: #1A1A1A;
+  font-weight: 600;
+  font-size: 1.7em;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.noAccountText{
+  color: #1A1A1A;
+
+} 
+
+.signUpText{
+  color: #9B7D6A;
+  cursor: pointer;
+  font-weight: 600
+}
+.signinFormContainer{
+  margin-top: 3rem;
+}
+.phoneLabel{
+  color: #333333;
+
+}
+input[type="text"]#phonenuminput{
+  background-color: #F2F2F2;
+}
+input[type="text"]#phonenuminput::-webkit-input-placeholder {
+  color: #808080;
+  font-family: 'Lato', sans-serif;
+  text-align: left;
+
+}
+.termsText{
+  color: #A5A5A5;
+  font-family: 'Lato', sans-serif;
+}
+.submitbtn{
+  font-weight: 700 !important;
+  background: #9B7D6A !important;
+  color: white !important;
+  transition-duration: 0.1s;
+  border-color: #9B7D6A !important;
+  border-radius: 0.25rem;
+  outline-color: #9B7D6A !important;
+}
+
+.submitbtn:hover{
+  color: white;
+  border-color: #b08d78 !important;
+  background: #b08d78 !important;
+}
+ 
+ .loginContainer{
+  margin-top: 30%;
+ }
+
+
+ 
