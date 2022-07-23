@@ -4,7 +4,42 @@ export default class AuthService {
         this.domain = domain || 'http://localhost:7000'
         this.fetch = this.fetch.bind(this)
         this.login = this.login.bind(this)
+        this.sendOtp = this.sendOtp.bind(this)
+        this.verifyOtp = this.verifyOtp.bind(this)
         this.getProfile = this.getProfile.bind(this)
+    }
+
+
+    sendOtp(phoneNumber, countryCode )
+    {   console.log(phoneNumber,countryCode )
+        return this.fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/resendotp`, {
+            mode: 'cors', 
+            method: "POST",
+            headers: {"Content-Type":"application/x-www-form-urlencoded"},
+            body: new URLSearchParams({
+                phone_number: phoneNumber,
+                country_code: countryCode
+              })
+        }).then(res => { 
+            // this.setToken(res.accessToken);
+            return Promise.resolve(res);
+        })
+    }
+
+    verifyOtp(phoneNumber, otp_string )
+    {   console.log(phoneNumber,otp_string )
+        return this.fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/verify_otp`, {
+            mode: 'cors', 
+            method: "POST",
+            headers: {"Content-Type":"application/x-www-form-urlencoded"},
+            body: new URLSearchParams({
+                phone_number: phoneNumber,
+                otp: otp_string
+              })
+        }).then(res => { 
+            // this.setToken(res.accessToken);
+            return Promise.resolve(res);
+        })
     }
 
     login(countryCode, phoneNumber, password) {
@@ -19,7 +54,7 @@ export default class AuthService {
                 country_code: countryCode
               })
         }).then(res => { 
-            this.setToken(res.accessToken);
+            // this.setToken(res.accessToken);
             return Promise.resolve(res);
         })
     }

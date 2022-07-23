@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import styles from './enterOtp.module.css'
+import AuthService from '../authServices/AuthService';
+const Auth = new AuthService();
 
-const EnterOTP = () => {
-    const [otp, setOtp] = useState({otp1: "6", otp2: "6", otp3: "6", otp4: "3"});
+const EnterOTP = ({phoneNumber}) => {
+    const [otp, setOtp] = useState({otp1: "", otp2: "", otp3: "", otp4: ""});
     const [timer, setTimer] = useState(6);
     const handleChange =  (event) => {
         var { name, value } = event.target;
@@ -35,10 +37,29 @@ const EnterOTP = () => {
         e.preventDefault();
         console.log(otp);
         startCountdown();
+
+          Auth.verifyOtp( phoneNumber, otp.otp1 + otp.otp2 + otp.otp3 + otp.otp4 )
+            .then(res => {
+                console.log(res);
+                if(res.status === true){
+                  alert('success')
+                      //  $("#loginContainer").slideUp("slow");
+                      //  $("#otpContainer").slideDown("slow");
+                }
+                    // navigate('/');
+                    //  eslint-disable-next-line react-hooks/exhaustive-deps
+                    // toast.success('Login successful.');
+                    // $("#loginContainer").slideUp("slow");
+                    // $("#otpContainer").slideDown("slow");
+
+            })
+            .catch(res => {
+              alert(';wrong otp')
+                    // toast.error('Invalid Credentials. Please try again.');
+            })
       }
 
       const startCountdown = (e) =>{
-       
         setIsActive(true);
       } 
 
@@ -59,9 +80,12 @@ const EnterOTP = () => {
       });
 
 
+
     return (
         <>
-            <div>
+            
+            <div className ={styles.otpContainer}>
+               
                 <span className={styles.signinTextTitle}>Enter OTP</span> 
                 <span className={styles.otpSubtitle}>You have received 4-digit OTP in your mobile number.</span> 
                 <div className="mt-5">

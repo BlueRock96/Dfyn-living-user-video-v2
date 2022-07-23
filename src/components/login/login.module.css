@@ -97,13 +97,25 @@
 }
 input[type="text"]#phonenuminput{
   background-color: #F2F2F2;
+  text-align: left;
+
 }
+/* input[type="password"]#password{
+  background-color: #F2F2F2;
+  text-align: left;
+
+} */
 input[type="text"]#phonenuminput::-webkit-input-placeholder {
   color: #808080;
   font-family: 'Lato', sans-serif;
   text-align: left;
-
 }
+
+/* input[type="password"]#password::-webkit-input-placeholder {
+  color: #808080;
+  font-family: 'Lato', sans-serif;
+  text-align: left;
+} */
 .termsText{
   color: #A5A5A5;
   font-family: 'Lato', sans-serif;
@@ -129,4 +141,10 @@ input[type="text"]#phonenuminput::-webkit-input-placeholder {
  }
 
 
- 
+ .otpContainer{
+    display: none;
+   
+ }
+ .otpBack{
+  cursor: pointer;
+}

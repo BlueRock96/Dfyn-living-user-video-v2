@@ -1,24 +1,25 @@
 
 import React, {useState, useEffect} from 'react'
 import styles from './login.module.css'
-// import EnterOTP from '../enterOtp/enterOtp'
-import validator from 'validator';
+import EnterOTP from '../enterOtp/enterOtp'
 import { ToastContainer, toast } from 'react-toastify';
 import { useParams , useNavigate    } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import AuthService from '../authServices/AuthService';
+import validator from 'validator';
 import $ from 'jquery'
+import { FaArrowLeft } from 'react-icons/fa';
+const Auth = new AuthService();
 
 const Login = () => {
     let navigate = useNavigate();
     const divStyleOpen = {
         transform: "translateX(100%)"
       };
-      const divStyleClose = {
+    const divStyleClose = {
         transform: "translateX(0%)"
-      };
+    };
 
-      const Auth = new AuthService();
 
     const [panelVisible, setPanelVisible] = useState(false);
     // const [isPasswordVisible] = useState(false);
@@ -31,6 +32,11 @@ const Login = () => {
     // }
     const togglePanel = () =>{
         setPanelVisible(!panelVisible);
+    }
+    const backToLoginPage = () =>{
+        $("#otpContainer").slideUp("slow");
+        $("#loginContainer").slideDown("slow");
+
     }
 
     const [loginInfo, setLoginInfo] = useState({countryCode:'+91', phoneNumber:'', password: ''})
@@ -48,13 +54,12 @@ const Login = () => {
                 ...loginInfo,
                 [name]: value
             }));
- 
     };
 
     const onSubmit = async (e) => {
         e.preventDefault();
         try {
-            if (loginInfo.phoneNumber === "" || loginInfo.password === "") {
+            if (loginInfo.phoneNumber === "") {
                 toast.error("All fields required");
                 return;
             }
@@ -62,12 +67,19 @@ const Login = () => {
                 toast.error("Invalid Mobile Number");
                 return;                
             }
-            Auth.login(loginInfo.countryCode, loginInfo.phoneNumber, loginInfo.password)
+
+            Auth.sendOtp( loginInfo.phoneNumber, loginInfo.countryCode)
             .then(res => {
+                console.log(res);
+                if(res.status === true){
+                       $("#loginContainer").slideUp("slow");
+                       $("#otpContainer").slideDown("slow");
+                }
                     // navigate('/');
                     //  eslint-disable-next-line react-hooks/exhaustive-deps
-                    toast.success('Login successful.');
-                    $("#loginContainer").slideUp("slow")
+                    // toast.success('Login successful.');
+                    // $("#loginContainer").slideUp("slow");
+                    // $("#otpContainer").slideDown("slow");
 
             })
             .catch(res => {
@@ -114,26 +126,25 @@ const Login = () => {
                                     <div className="">
                                         <label className={styles.phoneLabel}>Phone Number</label>
                                         <div className="input-group-sm  mb-3">
-                                            <input type="text" className='form-control' id={styles.phonenuminput} required name="phoneNumber" placeholder="Email or phone number" aria-label="phoneNumber" 
+                                            <input type="text" className='form-control' id={styles.phonenuminput} required name="phoneNumber" placeholder="Phone number" aria-label="phoneNumber" 
                                             aria-describedby="inputGroup-sizing-small" 
                                             value = {loginInfo.phoneNumber}
                                             onChange = {handleChange}
                                             />
-                                            <div>
-
-                                            </div>
                                         </div>
                                     </div>
 
-                                    <div className="form-group">
+                                    {/* 
+                                        <div className="form-group">
                                             <label>Password*</label>
-                                            <input type= {"password"} name="password" required className="form-control" placeholder="Enter password" 
-                                            value = {loginInfo.password}
-                                            onChange = {handleChange}
-                                            />
-                                            {/* <span className='password-visibile-text'  Click={togglePasswordVisibility} > {isPasswordVisible? "hide": "show"}</span> */}
+                                            <div className="input-group-sm  mb-3">
+                                                <input type= {"password"} name="password" id={styles.password} required className="form-control" placeholder="Enter password" 
+                                                aria-describedby="inputGroup-sizing-small" value = {loginInfo.password}
+                                                onChange = {handleChange}
+                                                />
+                                            </div>
                                         </div>
-
+                                    */}
 
 
                                     <p className={`${styles.termsText} mt-1`}>
@@ -153,7 +164,10 @@ const Login = () => {
                     </div>
 
 
-                    {/* <EnterOTP/> */}
+                    <div id="otpContainer" className={styles.otpContainer}>
+                        <span className={styles.otpBack} onClick = {backToLoginPage}><FaArrowLeft/></span>
+                        <EnterOTP phoneNumber = {loginInfo.phoneNumber}/>
+                    </div>
 
 
                 </div>
