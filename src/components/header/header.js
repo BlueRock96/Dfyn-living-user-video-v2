@@ -1,11 +1,19 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styles from "./header.module.css";
 import { FaSearch } from 'react-icons/fa';
+import Login from '../login/login';
 
 const Header = () => {
+    const [panelVisible, setPanelVisible] = useState(true);
+    const togglePanel = () =>{
+        setPanelVisible(!panelVisible);
+    }
+    const overlayHide = { display: "none" };
+    const overlayShow = {display: "block" };
 
     return (
             <>
+            <div className={styles.overlay} onClick = {togglePanel} style={ panelVisible ? overlayHide:overlayShow} ></div>
                     <div className= {`{styles.headerWrapper} ${styles.sticky}`}>
                         <div className={styles.headerContainer}  >
                             <div className={styles.logoContainer}>
@@ -20,12 +28,17 @@ const Header = () => {
                             </div>                        
                             
                             <div>
-                                <button className={styles.loginBtn}>Login</button> 
+                                <button className={styles.loginBtn} onClick={togglePanel}>Login</button> 
                             </div> 
-                        </div>
+                        </div> 
 
                         <hr className={styles.hrHeader}/>
                     </div>
+
+                    <Login 
+                        panelVisible={panelVisible}
+                        togglePanel = {togglePanel}
+                    />
 
             </>
         )

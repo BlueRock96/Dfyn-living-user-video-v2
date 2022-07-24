@@ -8,10 +8,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import AuthService from '../authServices/AuthService';
 import validator from 'validator';
 import $ from 'jquery'
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft, FaTimes } from 'react-icons/fa';
 const Auth = new AuthService();
 
-const Login = () => {
+const Login = ({panelVisible, togglePanel}) => {
     let navigate = useNavigate();
     const divStyleOpen = {
         transform: "translateX(100%)"
@@ -20,19 +20,6 @@ const Login = () => {
         transform: "translateX(0%)"
     };
 
-
-    const [panelVisible, setPanelVisible] = useState(false);
-    // const [isPasswordVisible] = useState(false);
-    // const [passwordFieldType] = useState('password')
-
-    // const togglePasswordVisibility = (e) =>{
-    //     this.setState({isPasswordVisible: !this.state.isPasswordVisible}, ()=>{
-    //         this.setState({passwordFieldType: this.state.isPasswordVisible ? 'text' : 'password'})
-    //     }); 
-    // }
-    const togglePanel = () =>{
-        setPanelVisible(!panelVisible);
-    }
     const backToLoginPage = () =>{
         $("#otpContainer").slideUp("slow");
         $("#loginContainer").slideDown("slow");
@@ -56,6 +43,9 @@ const Login = () => {
             }));
     };
 
+
+    
+
     const onSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -68,23 +58,27 @@ const Login = () => {
                 return;                
             }
 
-            Auth.sendOtp( loginInfo.phoneNumber, loginInfo.countryCode)
-            .then(res => {
-                console.log(res);
-                if(res.status === true){
-                       $("#loginContainer").slideUp("slow");
-                       $("#otpContainer").slideDown("slow");
-                }
-                    // navigate('/');
-                    //  eslint-disable-next-line react-hooks/exhaustive-deps
-                    // toast.success('Login successful.');
-                    // $("#loginContainer").slideUp("slow");
-                    // $("#otpContainer").slideDown("slow");
+            $("#loginContainer").slideUp("slow");
+            $("#otpContainer").slideDown("slow");
 
-            })
-            .catch(res => {
-                    toast.error('Invalid Credentials. Please try again.');
-            })
+
+            // Auth.sendOtp( loginInfo.phoneNumber, loginInfo.countryCode)
+            // .then(res => {
+            //     console.log(res);
+            //     if(res.status === true){
+            //            $("#loginContainer").slideUp("slow");
+            //            $("#otpContainer").slideDown("slow");
+            //     }
+            //         // navigate('/');
+            //         //  eslint-disable-next-line react-hooks/exhaustive-deps
+            //         // toast.success('Login successful.');
+            //         // $("#loginContainer").slideUp("slow");
+            //         // $("#otpContainer").slideDown("slow");
+
+            // })
+            // .catch(res => {
+            //         toast.error('Invalid Credentials. Please try again.');
+            // })
         }
         catch(e){
             console.log(e);
@@ -98,7 +92,6 @@ const Login = () => {
             <div >
 
 
-            <button onClick={togglePanel}> Login</button>
                 <div className={`${styles.panelWrap}`} style={ panelVisible ? divStyleOpen : divStyleClose}>
                 <div className = {styles.panel}>
 
@@ -115,8 +108,8 @@ const Login = () => {
                         </div>  
                         <div className={styles.signinSection}>
                             <div>
-                            <span className={styles.signinTextTitle}>Login</span> 
-                            <span className={styles.noAccountText}>Dont have an account?</span> <span className={styles.signUpText}>Sign up now</span> 
+                                <span className={styles.signinTextTitle}>Login</span> 
+                                <span className={styles.noAccountText}>Dont have an account?</span> <span className={styles.signUpText}>Sign up now</span> 
                             </div>
                             
 
@@ -133,19 +126,7 @@ const Login = () => {
                                             />
                                         </div>
                                     </div>
-
-                                    {/* 
-                                        <div className="form-group">
-                                            <label>Password*</label>
-                                            <div className="input-group-sm  mb-3">
-                                                <input type= {"password"} name="password" id={styles.password} required className="form-control" placeholder="Enter password" 
-                                                aria-describedby="inputGroup-sizing-small" value = {loginInfo.password}
-                                                onChange = {handleChange}
-                                                />
-                                            </div>
-                                        </div>
-                                    */}
-
+ 
 
                                     <p className={`${styles.termsText} mt-1`}>
                                         By clicking on Login, I accept the Terms & Conditions & Privacy Policy.
@@ -166,7 +147,7 @@ const Login = () => {
 
                     <div id="otpContainer" className={styles.otpContainer}>
                         <span className={styles.otpBack} onClick = {backToLoginPage}><FaArrowLeft/></span>
-                        <EnterOTP phoneNumber = {loginInfo.phoneNumber}/>
+                        <EnterOTP phoneNumber = {loginInfo.phoneNumber} togglePanel={togglePanel} />
                     </div>
 
 

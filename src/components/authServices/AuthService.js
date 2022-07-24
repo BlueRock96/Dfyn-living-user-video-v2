@@ -86,6 +86,13 @@ export default class AuthService {
         localStorage.setItem('_uToken', response);
     }
 
+    setUserInfo(info){
+        localStorage.setItem('_uInfo', info);
+    }
+    getUserInfo(){
+        return JSON.parse(localStorage.getItem('_uInfo'))
+    }
+
     getToken() {
         // Retrieves the user token from localStorage
         return localStorage.getItem('_uToken')
@@ -94,6 +101,7 @@ export default class AuthService {
     logout() {
         // Clear user token and profile data from localStorage
         localStorage.removeItem('_uToken');
+        localStorage.removeItem('_uInfo');
     }
 
     getProfile() {

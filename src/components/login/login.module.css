@@ -7,7 +7,7 @@
     width: 30em;
     transition: .3s ease-out;
     transform: translateX(100%);
-    
+    z-index: 3;
     
   }
   .panel {
@@ -16,7 +16,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: #f1dcc2;
+    background: #FFFFFF;
     overflow: auto;
     padding: 1em 2em;
 
@@ -100,22 +100,14 @@ input[type="text"]#phonenuminput{
   text-align: left;
 
 }
-/* input[type="password"]#password{
-  background-color: #F2F2F2;
-  text-align: left;
-
-} */
+ 
 input[type="text"]#phonenuminput::-webkit-input-placeholder {
   color: #808080;
   font-family: 'Lato', sans-serif;
   text-align: left;
 }
 
-/* input[type="password"]#password::-webkit-input-placeholder {
-  color: #808080;
-  font-family: 'Lato', sans-serif;
-  text-align: left;
-} */
+ 
 .termsText{
   color: #A5A5A5;
   font-family: 'Lato', sans-serif;
@@ -147,4 +139,6 @@ input[type="text"]#phonenuminput::-webkit-input-placeholder {
  }
  .otpBack{
   cursor: pointer;
+  color: #1A1A1A;
+  font-size: 1.2em;
 }

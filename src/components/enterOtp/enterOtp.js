@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import styles from './enterOtp.module.css'
 import AuthService from '../authServices/AuthService';
+import { toast } from 'react-toastify';
 const Auth = new AuthService();
 
-const EnterOTP = ({phoneNumber}) => {
+const EnterOTP = ({phoneNumber, togglePanel}) => {
     const [otp, setOtp] = useState({otp1: "", otp2: "", otp3: "", otp4: ""});
     const [timer, setTimer] = useState(6);
     const handleChange =  (event) => {
@@ -35,27 +36,32 @@ const EnterOTP = ({phoneNumber}) => {
 
       const handleSubmit = (e) =>{
         e.preventDefault();
-        console.log(otp);
         startCountdown();
 
           Auth.verifyOtp( phoneNumber, otp.otp1 + otp.otp2 + otp.otp3 + otp.otp4 )
             .then(res => {
                 console.log(res);
                 if(res.status === true){
-                  alert('success')
-                      //  $("#loginContainer").slideUp("slow");
-                      //  $("#otpContainer").slideDown("slow");
-                }
-                    // navigate('/');
-                    //  eslint-disable-next-line react-hooks/exhaustive-deps
-                    // toast.success('Login successful.');
-                    // $("#loginContainer").slideUp("slow");
-                    // $("#otpContainer").slideDown("slow");
+                  toast.success('Logged in successfully');
+                    //set access token , and user name and login
+                    console.log(res.accessToken);
+                    Auth.setToken(res.accessToken, ()=>{
+                      console.log(Auth.getProfile())
+                    })
+                    Auth.setUserInfo(JSON.stringify(res.app_user));
+                    console.log(Auth.getUserInfo());
+                    // SHow username at the top 
+                  
+                    togglePanel();
+                    
 
+                } else{
+                    toast.error('Invalid OTP. Please try again.');
+                    setOtp({otp1: "", otp2: "", otp3: "", otp4: ""});
+                }
             })
             .catch(res => {
-              alert(';wrong otp')
-                    // toast.error('Invalid Credentials. Please try again.');
+                    toast.error('Something went wrong. Please try again.');
             })
       }
 

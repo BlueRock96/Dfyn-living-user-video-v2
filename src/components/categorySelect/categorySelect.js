@@ -11,14 +11,14 @@ const CategorySelect = () => {
    
     return (
             <>
-
-                    <div className= {`${styles.categoryContainer} ${styles.disableScrollbars}`}>
+                    <div className='row'>
+                        <div className= {`${styles.categoryContainer} ${styles.disableScrollbars}`}>
                                 <button  className={`${styles.categoryBtn} ${styles.categoryBtnFirst}`}>All</button>
-                                
                                 {categoryList.map((category) =>
                                     <button  className={styles.categoryBtn} >{category.label}</button>
                                 )}
-                            </div>
+                        </div>
+                    </div>
             </>
         )
     }
