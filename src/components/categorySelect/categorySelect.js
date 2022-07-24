@@ -7,7 +7,7 @@ const CategorySelect = () => {
         {id: 1, label: 'Music'},{id: 2, label: 'Gaming'},{id: 3, label: 'Trailers'},
         {id: 4, label: 'T-Series'},{id: 5, label: 'Recently Uploaded'},{id: 6, label: 'Graphic Design'},
         {id: 7, label: 'Shopping'},{id: 8, label: 'Russia War'},{id: 9, label: 'Nifty 50'},
-        {id: 10, label: 'Sony Music'},{id: 11, label: 'Crafts'},{id: 12, label: 'Zara'}])
+        {id: 10, label: 'Sony Music'}])
    
     return (
             <>
