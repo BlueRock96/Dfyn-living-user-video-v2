@@ -35,7 +35,10 @@
 .resendOtpText{
   color:#959595;
   font-family:  'Lato', sans-serif;
+}
+.resendOtpText:hover{
   cursor: pointer;
+  color: #1A1A1A;
 }
 
 input[type="text"].otp {

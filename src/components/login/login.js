@@ -58,9 +58,9 @@ const Login = ({panelVisible, togglePanel}) => {
                 return;                
             }
 
+
             $("#loginContainer").slideUp("slow");
             $("#otpContainer").slideDown("slow");
-
 
             // Auth.sendOtp( loginInfo.phoneNumber, loginInfo.countryCode)
             // .then(res => {
@@ -68,6 +68,8 @@ const Login = ({panelVisible, togglePanel}) => {
             //     if(res.status === true){
             //            $("#loginContainer").slideUp("slow");
             //            $("#otpContainer").slideDown("slow");
+            //     }else{
+            //         toast.error(res.message);
             //     }
             //         // navigate('/');
             //         //  eslint-disable-next-line react-hooks/exhaustive-deps
@@ -77,7 +79,8 @@ const Login = ({panelVisible, togglePanel}) => {
 
             // })
             // .catch(res => {
-            //         toast.error('Invalid Credentials. Please try again.');
+            //     // console.log(res);
+            //         toast.error(res.message);
             // })
         }
         catch(e){

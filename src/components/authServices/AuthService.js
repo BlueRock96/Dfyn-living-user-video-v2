@@ -7,6 +7,7 @@ export default class AuthService {
         this.sendOtp = this.sendOtp.bind(this)
         this.verifyOtp = this.verifyOtp.bind(this)
         this.getProfile = this.getProfile.bind(this)
+        this.resendOtp = this.resendOtp.bind(this);
     }
 
 
@@ -21,6 +22,9 @@ export default class AuthService {
                 country_code: countryCode
               })
         }).then(res => { 
+            // this.setToken(res.accessToken);
+            return Promise.resolve(res);
+        }).catch(res => { 
             // this.setToken(res.accessToken);
             return Promise.resolve(res);
         })
@@ -41,6 +45,23 @@ export default class AuthService {
             return Promise.resolve(res);
         })
     }
+
+    resendOtp(phoneNumber, country_code )
+    {   console.log(phoneNumber,country_code )
+        return this.fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/resendotp`, {
+            mode: 'cors', 
+            method: "POST",
+            headers: {"Content-Type":"application/x-www-form-urlencoded"},
+            body: new URLSearchParams({
+                phone_number: phoneNumber,
+                country_code: country_code
+              })
+        }).then(res => { 
+            // this.setToken(res.accessToken);
+            return Promise.resolve(res);
+        })
+    }
+
 
     login(countryCode, phoneNumber, password) {
         // Get a token
@@ -81,6 +102,7 @@ export default class AuthService {
     }
 
     setToken(response) {
+        console.log("set otekn", response);
         // Saves user token to localStorage
         // localStorage.setItem('_uToken', response.token);
         localStorage.setItem('_uToken', response);
@@ -124,7 +146,7 @@ export default class AuthService {
             headers,
             ...options
         })
-            .then(this._checkStatus)
+            // .then(this._checkStatus)
             .then(response => response.json())
     }
 
@@ -138,4 +160,5 @@ export default class AuthService {
             throw error
         }
     }
+
 }

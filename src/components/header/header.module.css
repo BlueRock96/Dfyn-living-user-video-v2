@@ -83,4 +83,12 @@
     border-color: #544138;
 }
 
-
+.profilePic{
+    font-size: 2em;
+    color: #c4c4c4;
+}
+.profileName{
+    font-size: 1.2em;
+    font-weight: 500;   
+    color: #FFFFFF;
+}
