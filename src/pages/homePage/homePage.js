@@ -14,21 +14,18 @@ const HomePage = () => {
         {id: 7, label: 'Shopping', categoryId: 1},{id: 8, label: 'Russia War', categoryId: 2},
         {id: 9, label: 'Nifty 50', categoryId: 1}, {id: 10, label: 'Sony Music', categoryId: 2}])
 
+
+    const [activeId, setActiveId] = useState();
     const filterVideos = (category) => {
-        if (category.categoryId === 1) {
-            $('.row1').show();
-            $('.row2').hide();
-            $('.row3').hide();
-        }else if (category.categoryId === 0){
-            $('.row1').show();
-            $('.row2').show();
-            $('.row3').show();
-        }else{
-            $('.row1').hide();
-            $('.row2').show();
-            $('.row3').show();
-            }
-        
+        console.log(category.id);
+        setActiveId(category.id)
+        const filteredVideosList = videosListCopy.filter(d => d.categoryId === category.categoryId);
+        setVideoList(filteredVideosList);
+
+        if( category.categoryId === 0){
+            setVideoList(videosListCopy);
+        }
+            
     }
 
 
@@ -204,45 +201,18 @@ const HomePage = () => {
                     <CategorySelect
                         categoryList = {categoryList}
                         filterVideos = {filterVideos}
+                        activeId = {activeId}
 
                         />
                 </div>
 
 
-            <div className={styles.A1}>
-                            {videosList.map((videoInfo) =>
-                                <VideoGrid videoInfo={videoInfo} />
-                                )}
-            </div>
+                <div className={styles.A1}>
+                                {videosList.map((videoInfo) =>
+                                    <VideoGrid videoInfo={videoInfo} />
+                                    )}
+                </div>
 
-
-            
-                {/* <div className={styles.videosContainerAll}>
-                    <FlipMove> */}
-                        {/* <div className='row1'>  */}
-                        {/* <div className='grid-container'>  */}
-                            {/* <div className= {styles.videosContainer}>
-                            {videosList.map((videoInfo) =>
-                                <VideoGrid videoInfo={videoInfo} />
-                                )} */}
-                            {/* </div> */}
-                        {/* </div> */}
-                    {/* </FlipMove> */}
-                        {/* <div className='row2'> 
-                            <div className= {styles.videosContainer}>
-                            {videosList2.map((videoInfo) =>
-                                <VideoGrid videoInfo={videoInfo} />
-                                )}
-                            </div>
-                        </div>
-                        <div className='row3'>
-                            <div className= {styles.videosContainer}>
-                            {videosList.map((videoInfo) =>
-                                <VideoGrid videoInfo={videoInfo} />
-                                )}
-                            </div>
-                        </div> */}
-                    {/* </div> */}
 
                 </div>
             </div>

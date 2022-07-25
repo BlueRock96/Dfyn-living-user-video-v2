@@ -59,29 +59,29 @@ const Login = ({panelVisible, togglePanel}) => {
             }
 
 
-            $("#loginContainer").slideUp("slow");
-            $("#otpContainer").slideDown("slow");
+            // $("#loginContainer").slideUp("slow");
+            // $("#otpContainer").slideDown("slow");
 
-            // Auth.sendOtp( loginInfo.phoneNumber, loginInfo.countryCode)
-            // .then(res => {
-            //     console.log(res);
-            //     if(res.status === true){
-            //            $("#loginContainer").slideUp("slow");
-            //            $("#otpContainer").slideDown("slow");
-            //     }else{
-            //         toast.error(res.message);
-            //     }
-            //         // navigate('/');
-            //         //  eslint-disable-next-line react-hooks/exhaustive-deps
-            //         // toast.success('Login successful.');
-            //         // $("#loginContainer").slideUp("slow");
-            //         // $("#otpContainer").slideDown("slow");
+            Auth.sendOtp( loginInfo.phoneNumber, loginInfo.countryCode)
+            .then(res => {
+                console.log(res);
+                if(res.status === true){
+                       $("#loginContainer").slideUp("slow");
+                       $("#otpContainer").slideDown("slow");
+                }else{
+                    toast.error(res.message);
+                }
+                    // navigate('/');
+                    //  eslint-disable-next-line react-hooks/exhaustive-deps
+                    // toast.success('Login successful.');
+                    // $("#loginContainer").slideUp("slow");
+                    // $("#otpContainer").slideDown("slow");
 
-            // })
-            // .catch(res => {
-            //     // console.log(res);
-            //         toast.error(res.message);
-            // })
+            })
+            .catch(res => {
+                // console.log(res);
+                    toast.error(res.message);
+            })
         }
         catch(e){
             console.log(e);

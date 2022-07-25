@@ -38,9 +38,9 @@
 }
 
 .categoryBtn:hover{
-    background: #F0F0F0;
+    background: #727272 !important;
     color: #9B7D6A;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.4);
 }
 
 /* .categoryBtnActive{
