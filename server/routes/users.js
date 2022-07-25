@@ -20,9 +20,9 @@ function sendOTPToNumber(mobile_no, otp_string) {
 
     request(options, function (error, response, body) {
       // if (error) throw new Error(error);
-      console.log(body);
-      console.log(JSON.parse(body).Status);
-      console.log(JSON.parse(body).Details);
+      // console.log(body);
+      // console.log(JSON.parse(body).Status);
+      // console.log(JSON.parse(body).Details);
       if (JSON.parse(body).Status === "Success") {
         return { status: true, message: "OTP sent successfully" };
       } else {

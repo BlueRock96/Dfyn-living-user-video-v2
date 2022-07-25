@@ -40,14 +40,14 @@ const EnterOTP = ({phoneNumber, togglePanel}) => {
 
           Auth.verifyOtp( phoneNumber, otp.otp1 + otp.otp2 + otp.otp3 + otp.otp4 )
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 if(res.status !== false){
                   toast.success('Logged in successfully');
                     //set access token , and user name and login
-                    console.log(res.accessToken);
+                    // console.log(res.accessToken);
                     Auth.setToken(res.accessToken)
                     Auth.setUserInfo(JSON.stringify(res.app_user));
-                    console.log(Auth.getUserInfo());
+                    // console.log(Auth.getUserInfo());
                     // SHow username at the top 
                   
                     togglePanel();
@@ -71,7 +71,7 @@ const EnterOTP = ({phoneNumber, togglePanel}) => {
         setTimer(30)
         Auth.resendOtp( phoneNumber,  countryCode)
         .then(res => {
-            console.log(res);
+            // console.log(res);
             if(res.status !== false){
               //count down 
               startCountdown();
@@ -91,13 +91,17 @@ const EnterOTP = ({phoneNumber, togglePanel}) => {
 
       useEffect(() => {
         let   timerInt  = null;
-        if(timer === 0 ){ console.log(timer); clearInterval(timer);  setIsActive(false); setTimer(30)}
+        if(timer === 0 ){ 
+          // console.log(timer); 
+          clearInterval(timer);  setIsActive(false); setTimer(30)}
 
         if(isActive){
           timerInt = setInterval(() => {
             // setTimer(timer - 1);
             setTimer(timer - 1)
-            if(timer === 0 ){ console.log(timer); clearInterval(timer);  setIsActive(false);setTimer(30)}
+            if(timer === 0 ){ 
+              // console.log(timer); 
+              clearInterval(timer);  setIsActive(false);setTimer(30)}
           }, 1000);
         }
         return () => {

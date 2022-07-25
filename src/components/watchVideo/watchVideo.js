@@ -123,7 +123,7 @@ const WatchVideo = () => {
     }
     useEffect(() =>{
         var watchVideoObj =  videoItems.find(o => parseInt(o.id) === parseInt(id))
-        console.log(watchVideoObj);
+        // console.log(watchVideoObj);
        if(!_.isUndefined(watchVideoObj))
             setVideoWatching(watchVideoObj)
         else

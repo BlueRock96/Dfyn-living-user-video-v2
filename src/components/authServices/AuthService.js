@@ -12,7 +12,8 @@ export default class AuthService {
 
 
     sendOtp(phoneNumber, countryCode )
-    {   console.log(phoneNumber,countryCode )
+    {  
+        //  console.log(phoneNumber,countryCode )
         return this.fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/resendotp`, {
             mode: 'cors', 
             method: "POST",
@@ -31,7 +32,8 @@ export default class AuthService {
     }
 
     verifyOtp(phoneNumber, otp_string )
-    {   console.log(phoneNumber,otp_string )
+    {  
+        //  console.log(phoneNumber,otp_string )
         return this.fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/verify_otp`, {
             mode: 'cors', 
             method: "POST",
@@ -47,7 +49,8 @@ export default class AuthService {
     }
 
     resendOtp(phoneNumber, country_code )
-    {   console.log(phoneNumber,country_code )
+    {  
+        //  console.log(phoneNumber,country_code )
         return this.fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/resendotp`, {
             mode: 'cors', 
             method: "POST",
