@@ -105,7 +105,6 @@ export default class AuthService {
     }
 
     setToken(response) {
-        console.log("set otekn", response);
         // Saves user token to localStorage
         // localStorage.setItem('_uToken', response.token);
         localStorage.setItem('_uToken', response);
@@ -125,6 +124,7 @@ export default class AuthService {
 
     logout() {
         // Clear user token and profile data from localStorage
+        console.log('logout called');
         localStorage.removeItem('_uToken');
         localStorage.removeItem('_uInfo');
     }

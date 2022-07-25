@@ -1,7 +1,7 @@
 .body{
     background-color: black;
     color: white;
-    min-height: 136vh;
+    min-height: 160vh;
 }
 .container{
     margin-top: 100px;
@@ -146,7 +146,7 @@
     background: linear-gradient(180deg, #070707 0%, rgba(55, 43, 37, 0.76) 100%); 
     display: flex;
     flex-direction: row;
-    height: 121px;
+    height: 135px;
    transition: all 0.3s ease-in-out 0s;
 
 }
@@ -160,7 +160,7 @@
     /* width: 100%; */
     object-fit: cover;
     width: 173px;
-    height: 121px;
+    height: 135px;
 }
 .videoItemContentWrapper{
     padding: 0 92px 0 20px;

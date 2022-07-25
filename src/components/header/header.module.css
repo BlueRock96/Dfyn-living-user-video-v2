@@ -70,7 +70,27 @@
 }
 
 
+.searchResetBtn{
+    position: absolute;
+    margin-left: -35px;
+    background-color: transparent;
+    opacity: 0.6;
+    color: rgba(255, 255, 255, 1);   
+    border: none;
+}
+
+
 .loginBtn{
+    width: 100px;
+    height: 36px;    
+    border-radius: 8px;
+    background: #B19D97;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.logoutBtn{
+    margin-left: 20px;
     width: 100px;
     height: 36px;    
     border-radius: 8px;
@@ -84,11 +104,11 @@
 }
 
 .profilePic{
-    font-size: 2em;
+    font-size: 1.6em;
     color: #c4c4c4;
 }
 .profileName{
-    font-size: 1.2em;
+    font-size: 1.1em;
     font-weight: 500;   
     color: #FFFFFF;
 }

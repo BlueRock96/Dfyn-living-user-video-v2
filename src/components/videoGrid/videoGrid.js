@@ -12,7 +12,7 @@ const VideoGrid = ({videoInfo}) => {
             <>
 
 
-                <div className= {styles.videoItemContainer}>
+                <div className= {`${styles.videoItemContainer} grid-item`}>
                     <div className={styles.videoThumbnailWrapper} 
                           onClick={()=>playVideo(videoInfo.id)}>
                         <img src = {videoInfo.thumbnail}

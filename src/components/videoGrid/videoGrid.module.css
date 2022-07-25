@@ -3,14 +3,15 @@
     flex-direction: column;
     max-width: 330px;
     width: 100%;
-    margin: 10px;
+    margin: 30px;
 }
 .videoThumbnail{
     cursor: pointer;
 }
 .videoThumbnailWrapper > img{
     /* width: 100%; */
-    object-fit: cover;
+    /* object-fit: cover; */
+    object-fit: contain;
     width: 360px;
     height: 203px;
 }

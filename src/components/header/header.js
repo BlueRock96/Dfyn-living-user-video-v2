@@ -1,11 +1,13 @@
 import React, {useState} from 'react'
 import styles from "./header.module.css";
-import { FaSearch, FaUserCircle } from 'react-icons/fa';
+import { FaSearch, FaUserCircle, FaTimes } from 'react-icons/fa';
 import Login from '../login/login';
+import Select from 'react-select'
+
 import AuthService from '../authServices/AuthService';
 const Auth = new AuthService();
 
-const Header = () => {
+const Header = ({videosList, setVideoList, videosListCopy}) => {
     const [panelVisible, setPanelVisible] = useState(true);
     const togglePanel = () =>{
         setPanelVisible(!panelVisible);
@@ -13,6 +15,7 @@ const Header = () => {
     const overlayHide = { display: "none" };
     const overlayShow = {display: "block" };
 
+ 
     const toTitleCase = (str) => {
         return str.replace(
           /\w\S*/g,
@@ -22,7 +25,37 @@ const Header = () => {
         );
       }
 
-    return (
+      const [searchString, setSearchString] = useState('')
+
+      const handleChange = (e) => {
+        
+        e.preventDefault();
+        const {name,value} = e.target;
+        setSearchString(value);
+        onSearch();
+        
+        if(value === ''){onSearchReset()}
+    };
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+          onSearch();
+        }
+      }
+
+     const  onSearch = () =>{
+        if(searchString){
+            setVideoList(videosListCopy);
+            const searchedVideos = videosList.filter(d => d.title.toLowerCase().includes(searchString.toLowerCase()));
+            setVideoList(searchedVideos);
+        }
+
+      }
+      const onSearchReset = () =>{
+        setSearchString('');
+        setVideoList(videosListCopy);
+      }
+      return (
             <>
             <div className={styles.overlay} onClick = {togglePanel} style={ panelVisible ? overlayHide:overlayShow} ></div>
                     <div className= {`{styles.headerWrapper} ${styles.sticky}`}>
@@ -34,20 +67,26 @@ const Header = () => {
                             </div>
 
                             <div>
-                                <input className = {styles.searchBarInput} type = 'text' placeholder='Search'/>
-                                <button className={styles.searchBtn}> <FaSearch/></button>
+                                <input className = {styles.searchBarInput} 
+                                    onChange = {handleChange}
+                                    type = 'text' placeholder='Search'
+                                    value = {searchString}
+                                    onKeyDown={handleKeyDown}/>
+                                <button className={styles.searchResetBtn} onClick = {onSearchReset}> <FaTimes/></button>
+                                <button className={styles.searchBtn} onClick = {onSearch}> <FaSearch/></button>
                             </div>                        
                             
+
+
+
                             <div>
                                 { !Auth.loggedIn()?  
-                                    <button className={styles.loginBtn} onClick={togglePanel}>Login</button>
+                                    <button className={styles.loginBtn} onClick={togglePanel}>Login   </button>
                                     : 
                                     <div>
                                         <span className={styles.profilePic}><FaUserCircle/> </span> 
                                         <span className= {styles.profileName}> {toTitleCase(Auth.getUserInfo().full_name)}</span>
-
-                                    <button className={styles.loginBtn} onClick={Auth.logout()}>Logout</button>
-
+                                        <button  className={styles.logoutBtn} onClick={ e=>{Auth.logout(); window.location.reload()} }>Logout</button>
                                     </div>
                                 }
                             </div> 

@@ -3,26 +3,24 @@
     color: white;
     min-height: 100vh;
 }
-
-.videosContainerAll{
-    margin-top: 103px;
-    padding-top: 90px;
-    margin-left: 47px;  
-    margin-right: 47px;
+.app{
+    width: 100vw;
 }
-
-
-.videosContainer{
-    margin: 15px 0 0 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .headerContainer{
     /* height: 400px; */
     position: fixed;
-    position: fixed;
     z-index: 2;
+}
+
+.A1{
+    margin-top: 103px;
+    padding-top: 90px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.A2{
+    height: 400px;
+    width: 500px;
+    background-color: aqua;
+    margin: 10px;
 }
