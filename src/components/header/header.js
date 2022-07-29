@@ -1,8 +1,7 @@
 import React, {useState} from 'react'
 import styles from "./header.module.css";
-import { FaSearch, FaUserCircle, FaTimes } from 'react-icons/fa';
+import { FaSearch, FaUserCircle, FaTimes ,FaSignOutAlt} from 'react-icons/fa';
 import Login from '../login/login';
-import Select from 'react-select'
 
 import AuthService from '../authServices/AuthService';
 const Auth = new AuthService();
@@ -60,13 +59,30 @@ const Header = ({videosList, setVideoList, videosListCopy}) => {
             <div className={styles.overlay} onClick = {togglePanel} style={ panelVisible ? overlayHide:overlayShow} ></div>
                     <div className= {`{styles.headerWrapper} ${styles.sticky}`}>
                         <div className={styles.headerContainer}  >
+
+                        <div className={styles.mobileLogoLogoutCont}>
+
                             <div className={styles.logoContainer}>
                                 <a href='/'>
                                     <img src = "/dfyn-logo-home.png" alt = 'Dfyn Living' />
                                 </a>
                             </div>
+                            <div className={styles.mobileLogoContainer}>
+                            { !Auth.loggedIn()?  
+                                        <button className={styles.loginBtn} onClick={togglePanel}>Login   </button>
+                                        : 
+                                        <div>
+                                            <span className={styles.profilePic}><FaUserCircle/> </span> 
+                                            <span className= {styles.profileName}> {toTitleCase(Auth.getUserInfo().full_name)}</span>
+                                            <FaSignOutAlt className={styles.logoutIcon}  onClick={ e=>{Auth.logout(); window.location.reload()}} />
+                                            {/* // <button  className={styles.logoutBtn} onClick={ e=>{Auth.logout(); window.location.reload()} }><FaSignOutAlt/></button> */}
+                                        </div>
+                                    }
+                            </div>
+                        </div>
 
-                            <div>
+                          
+                            <div className={styles.searchContainer}>
                                 <input className = {styles.searchBarInput} 
                                     onChange = {handleChange}
                                     type = 'text' placeholder='Search'
@@ -76,10 +92,8 @@ const Header = ({videosList, setVideoList, videosListCopy}) => {
                                 <button className={styles.searchBtn} onClick = {onSearch}> <FaSearch/></button>
                             </div>                        
                             
-
-
-
-                            <div>
+  
+                            <div className={styles.loginBtnContainer}>
                                 { !Auth.loggedIn()?  
                                     <button className={styles.loginBtn} onClick={togglePanel}>Login   </button>
                                     : 
@@ -90,6 +104,9 @@ const Header = ({videosList, setVideoList, videosListCopy}) => {
                                     </div>
                                 }
                             </div> 
+
+
+
                         </div> 
 
                         <hr className={styles.hrHeader}/>
