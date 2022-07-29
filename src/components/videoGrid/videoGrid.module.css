@@ -63,3 +63,23 @@
     color: #FFFFFF;
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
+
+
+@media screen and (max-width: 480px){
+    .videoItemContainer{
+        margin: 12px 20px;
+    }
+
+    .videoThumbnailWrapper > img{
+        object-fit: contain;
+        width: 100%;
+        height: 200px;
+    }
+
+    .followBtn{
+        border: 1.2px solid #B19D97;
+        font-size: 1rem;
+        padding: 4px 12px;
+        width: 86px;
+    }
+}
