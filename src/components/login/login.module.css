@@ -143,6 +143,9 @@ input[type="text"]#phonenuminput::-webkit-input-placeholder {
   font-size: 1.2em;
 }
 
+.loginCloseBtn{
+  color: #333333;
+}
 
 
 @media screen and (max-width: 480px){
