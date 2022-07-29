@@ -143,7 +143,7 @@
 
 .videoItem{
     cursor: pointer;
-    background: linear-gradient(180deg, #070707 0%, rgba(55, 43, 37, 0.76) 100%); 
+    background: linear-gradient(180deg, #070707 0%, rgba(55, 43, 37, 0.36) 100%); 
     display: flex;
     flex-direction: row;
     height: 135px;
@@ -180,3 +180,63 @@
 }
 
 
+@media screen and (max-width: 480px){
+
+    .container{
+        display: flex;
+        flex-direction: column;
+        margin-left: 22px;
+        margin-right: 22px
+    }
+    
+    .reactPlayer{
+        width: 100% !important;
+        height: auto !important;
+        min-height: 100% !important;
+    }
+    .watchVideoContainer{
+        width: 100%;
+        padding: 0px;
+    }
+
+    .reactPlayer{
+        margin-top: 16px;
+    }
+    .followBtn{
+        font-size: 1rem;
+        width: 84px;
+        height: 31px;
+        padding: 2px  ;
+    }
+    .viewCount{
+        margin-top: 4px;
+    }
+    .featuredVideosContainer{
+        width: 100%;
+    }
+
+  
+    .videoItemContentWrapper{
+        padding: 0 8px 0 12px;
+    }
+    .videoTitle{
+        font-size: 1em;
+    }
+   .videoItem{
+    display: flex;
+    flex-direction: column;
+    height: 100% ;
+
+   }
+   .thumbnailWrapper > img {
+    width: 100%;
+    }
+    .videoItemContentWrapper{
+        padding: 12px 8px !important;
+    }
+    .body{
+        min-height: 310vh;
+    }
+
+    
+}

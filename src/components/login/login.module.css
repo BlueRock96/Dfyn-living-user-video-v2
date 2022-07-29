@@ -142,3 +142,13 @@ input[type="text"]#phonenuminput::-webkit-input-placeholder {
   color: #1A1A1A;
   font-size: 1.2em;
 }
+
+
+
+@media screen and (max-width: 480px){
+
+.panelWrap {
+width: 100%;
+}
+
+}

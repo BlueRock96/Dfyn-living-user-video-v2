@@ -111,17 +111,17 @@ const WatchVideo = () => {
     //  const [videoItemsCopy, setVideoItemsCopy] = useState(videoItems);
     const [videoWatching, setVideoWatching] = useState(videoItems[1])
     const playVideo = (videoItem) =>{
-        
         setVideoWatching(videoItem);
-
+        window.scrollTo(0, 0);
         // const myArray = videoItemsCopy.filter(function( obj ) {
         //     return obj.id !== videoItem.id;
         // });
         // setVideoItems(myArray)
 
-        
     }
     useEffect(() =>{
+        window.scrollTo(0, 0);
+
         var watchVideoObj =  videoItems.find(o => parseInt(o.id) === parseInt(id))
         // console.log(watchVideoObj);
        if(!_.isUndefined(watchVideoObj))
