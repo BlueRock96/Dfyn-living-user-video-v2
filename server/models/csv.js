@@ -30,4 +30,4 @@ var csvSchema = new mongoose.Schema({
     }  
 });  
    
-module.exports = mongoose.model('studenModel',csvSchema); 
+// module.exports = mongoose.model('studenModel',csvSchema); 

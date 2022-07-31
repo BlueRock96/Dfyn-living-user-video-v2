@@ -7,14 +7,21 @@ var fetch = require('node-fetch');
 require('dotenv').config()
 
 var users = require('./routes/users')
+const channelRoute = require('./routes/channel');
+const videoRoute = require('./routes/videoRoute');
+const mongoose = require('mongoose');
+
+mongoose.connect(`mongodb+srv://root:${process.env.mongoPW}@cluster0.dwfid.mongodb.net/?retryWrites=true&w=majority`)
 
 
 //init app
 //set the template engine
 app.set("view engine", "ejs");
 app.use(cors())
-app.use(users)
 app.use(express.json());
+app.use(users)
+app.use(channelRoute);
+app.use(videoRoute);
 //fetch data from the request
 app.use(express.urlencoded({ extended: false }));
 //static folder
