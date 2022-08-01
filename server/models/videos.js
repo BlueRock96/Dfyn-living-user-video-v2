@@ -4,6 +4,7 @@ const videosSchema = mongoose.Schema({
     _id: mongoose.Types.ObjectId,
     title: { type: String, require: true },
     channel: { type: mongoose.Types.ObjectId, require: true, ref: 'Channel'},
+    category: { type: mongoose.Types.ObjectId, require: true, ref: 'Category'},
     description: { type: String },
     url: { type: String },
     thumbnail: { type: String },
