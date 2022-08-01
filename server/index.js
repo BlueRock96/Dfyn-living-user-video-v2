@@ -9,6 +9,7 @@ require('dotenv').config()
 var users = require('./routes/users')
 const channelRoute = require('./routes/channel');
 const videoRoute = require('./routes/videoRoute');
+const categoryRoute = require('./routes/category');
 const mongoose = require('mongoose');
 
 mongoose.connect(`mongodb+srv://root:${process.env.mongoPW}@cluster0.dwfid.mongodb.net/?retryWrites=true&w=majority`)
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use(users)
 app.use(channelRoute);
 app.use(videoRoute);
+app.use(categoryRoute);
 //fetch data from the request
 app.use(express.urlencoded({ extended: false }));
 //static folder

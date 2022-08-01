@@ -8,7 +8,7 @@ const Channel = require('../models/channel');
 const { result } = require('lodash');
 
 router.post('/create-video', async(req, res) => {
-    var { title, channel, description, url, thumbnail } = req.body;
+    var { title, channel, description, url, thumbnail, category } = req.body;
     var createVideo = new Video({
         _id: mongoose.Types.ObjectId(),
         title,
@@ -16,6 +16,7 @@ router.post('/create-video', async(req, res) => {
         description,
         url,
         thumbnail,
+        category
     });
 
     createVideo.save().then(result => {console.log(result);
@@ -67,7 +68,7 @@ router.get('/getvideos', async(req, res) => {
     //     });
     // }).catch(e=>{console.log(e);});
 
-    Video.find().populate('channel', 'name thumbnail subscribe').exec().then(result => {
+    Video.find().populate('channel', 'name thumbnail subscribe').populate('category', '_id').exec().then(result => {
         res.status(200).json({
             data: result.map(video => {
                 return {
@@ -78,6 +79,8 @@ router.get('/getvideos', async(req, res) => {
                     thumbnail: video.thumbnail,
                     channel: video.channel,
                     view: video.total_view,
+                    categoryId : video.category._id,
+                    uploadDate : video.created_at,
                 }
             })
         });
@@ -91,13 +94,23 @@ router.get('/getvideo/:id', async(req, res) => {
         var response = {};
 		response['status'] = 'error';
 		response['msg'] = '';
-        Video.findById(id).exec().then(doc => {
+        Video.findById(id).populate('channel', 'name thumbnail subscribe').populate('category', '_id').exec().then(doc => {
             if(doc) {
                 // res.status(200).json(doc);
                 response.view = doc
                 Video.find({_id: {$nin: id}}).exec().then(doc => {
                     response.recommended = doc
-                    return res.status(200).json(response);
+                    return res.status(200).json({
+                        id: doc._id,
+                        title: doc.title,
+                        description: doc.description,
+                        url: doc.url,
+                        thumbnail: doc.thumbnail,
+                        channel: doc.channel,
+                        view: doc.total_view,
+                        categoryId : doc.category._id,
+                        uploadDate : doc.created_at
+                    });
                 })
             } else {
                 response.msg = 'Video Not avalible.';
