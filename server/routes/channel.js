@@ -46,5 +46,26 @@ router.post('/subscribe', async(req, res) => {
     }
 });
 
+router.get('/subscribed-channel', async(req, res) => {
+    try {
+        var usedId = req.body.usedId;
+
+        Subscription.find({user:usedId}).exec().then(docs => {
+            res.status(200).json({
+                data: docs.map(doc => {
+                    return {
+                        channelId:doc.channel
+                    }
+                })
+            })
+        })
+
+
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+
 
 module.exports = router;
