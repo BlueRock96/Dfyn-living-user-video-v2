@@ -9,25 +9,49 @@ const HomePage = ({videosList, setVideoList}) => {
 
     // const [videosList, setVideoList] = useState([])
     const [videosListCopy, setVideosListCopy] = useState([])
+    const [categoryList,setCategoryList ] = useState([])
 
-    const [categoryList ] = useState([
-        {id: 1, label: 'Music', categoryId: 1 },{id: 2, label: 'Gaming', categoryId: 2},
-        {id: 3, label: 'Trailers', categoryId: 1}, {id: 4, label: 'T-Series', categoryId: 2},
-        {id: 5, label: 'Recently Uploaded', categoryId: 1},{id: 6, label: 'Graphic Design', categoryId: 2},
-        {id: 7, label: 'Shopping', categoryId: 1},{id: 8, label: 'Russia War', categoryId: 2},
-        {id: 9, label: 'Nifty 50', categoryId: 1}, {id: 10, label: 'Sony Music', categoryId: 2}])
+    // const [categoryList ] = useState([
+    //     {id: 1, label: 'Music', categoryId: 1 },{id: 2, label: 'Gaming', categoryId: 2},
+    //     {id: 3, label: 'Trailers', categoryId: 1}, {id: 4, label: 'T-Series', categoryId: 2},
+    //     {id: 5, label: 'Recently Uploaded', categoryId: 1},{id: 6, label: 'Graphic Design', categoryId: 2},
+    //     {id: 7, label: 'Shopping', categoryId: 1},{id: 8, label: 'Russia War', categoryId: 2},
+    //     {id: 9, label: 'Nifty 50', categoryId: 1}, {id: 10, label: 'Sony Music', categoryId: 2}])
 
 
     const [activeId, setActiveId] = useState();
     const filterVideos = (category) => {
+        console.log(category);
         setActiveId(category.id)
-        const filteredVideosList = videosListCopy.filter(d => d.categoryId === category.categoryId);
+        const filteredVideosList = videosListCopy.filter(d => d.id === category.id);
         setVideoList(filteredVideosList);
-        if( category.categoryId === 0){
+        if( category.id === 0){
             setVideoList(videosListCopy);
         }
             
     }
+
+        useEffect( () => {
+
+
+        async function fetchCategory() {
+            const response = await fetch(`http://localhost:7001/getCategory`,{
+                mode: 'cors', 
+                method: "GET",
+                // headers: {"Content-Type":"application/x-www-form-urlencoded"},
+              });
+              const parseRes =   await response.json()
+              // console.log(response);
+              if(response.status === 200){
+                console.log(parseRes);
+                setCategoryList(parseRes)
+            }        
+          }
+          fetchCategory();
+      }, []);
+
+
+    
     // useEffect( () => {
 
 
