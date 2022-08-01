@@ -137,6 +137,7 @@ router.post('/like-video', async(req, res) => {
 
         var userId = req.body.userid;
         var videoId = req.body.videoid;
+        // Video.findOneAndUpdate({_id:videoId}, {})
 
         const createLike = new Like({
                 _id: mongoose.Types.ObjectId(),

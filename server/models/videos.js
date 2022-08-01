@@ -9,6 +9,7 @@ const videosSchema = mongoose.Schema({
     url: { type: String },
     thumbnail: { type: String },
     total_view: { type: Number, default: 0},
+    total_like: { type: Number, default: 0},
     created_at: { type: Date, default: Date.now},
     updated_at: { type: Date, default: Date.now}
 })
