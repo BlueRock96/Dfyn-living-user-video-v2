@@ -2,6 +2,7 @@
 import React, {useState, useEffect} from 'react'
 import styles from './login.module.css'
 import EnterOTP from '../enterOtp/enterOtp'
+import Register from '../register/register';
 import { ToastContainer, toast } from 'react-toastify';
 import { useParams , useNavigate    } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
@@ -22,6 +23,7 @@ const Login = ({panelVisible, togglePanel}) => {
 
     const backToLoginPage = () =>{
         $("#otpContainer").slideUp("slow");
+        $("#registerContainer").slideUp("slow");
         $("#loginContainer").slideDown("slow");
 
     }
@@ -42,6 +44,13 @@ const Login = ({panelVisible, togglePanel}) => {
                 [name]: value
             }));
     };
+
+    const onRegisterClick = (e) =>{
+        e.preventDefault();
+      
+        $("#loginContainer").slideUp("slow");
+        $("#registerContainer").slideDown("slow");
+    }
 
 
     
@@ -114,7 +123,7 @@ const Login = ({panelVisible, togglePanel}) => {
                         <div className={styles.signinSection}>
                             <div>
                                 <span className={styles.signinTextTitle}>Login</span> 
-                                <span className={styles.noAccountText}>Dont have an account?</span> <span className={styles.signUpText}>Sign up now</span> 
+                                <span className={styles.noAccountText}>Dont have an account?</span> <span className={styles.signUpText} onClick = {onRegisterClick}>Sign up now</span> 
                             </div>
                             
 
@@ -153,6 +162,13 @@ const Login = ({panelVisible, togglePanel}) => {
                     <div id="otpContainer" className={styles.otpContainer}>
                         <span className={styles.otpBack} onClick = {backToLoginPage}><FaArrowLeft/></span>
                         <EnterOTP phoneNumber = {loginInfo.phoneNumber} togglePanel={togglePanel} />
+                    </div>
+
+
+                    
+                    <div id="registerContainer" className={styles.registerContainer}>
+                        <span className={styles.otpBack} onClick = {backToLoginPage}><FaArrowLeft/></span>
+                        < Register backToLoginPage = {backToLoginPage} togglePanel={togglePanel} />
                     </div>
 
 

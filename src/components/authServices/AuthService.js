@@ -33,7 +33,6 @@ export default class AuthService {
 
     verifyOtp(phoneNumber, otp_string )
     {  
-        //  console.log(phoneNumber,otp_string )
         return this.fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/verify_otp`, {
             mode: 'cors', 
             method: "POST",
@@ -43,7 +42,6 @@ export default class AuthService {
                 otp: otp_string
               })
         }).then(res => { 
-            // this.setToken(res.accessToken);
             return Promise.resolve(res);
         })
     }
@@ -60,10 +58,12 @@ export default class AuthService {
                 country_code: country_code
               })
         }).then(res => { 
-            // this.setToken(res.accessToken);
             return Promise.resolve(res);
         })
     }
+
+ 
+
 
 
     login(countryCode, phoneNumber, password) {
@@ -155,10 +155,12 @@ export default class AuthService {
 
     _checkStatus(response) {
         // raises an error in case response status is not a success
+        console.log(response);
         if (response.status >= 200 && response.status < 300) {
             return response
         } else {
-            var error = new Error(response.statusText)
+            console.log(response);
+            var error = new Error(response.message)
             error.response = response
             throw error
         }
