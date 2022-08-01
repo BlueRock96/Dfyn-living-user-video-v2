@@ -93,12 +93,10 @@
 }
 .phoneLabel{
   color: #333333;
-
 }
 input[type="text"]#phonenuminput{
   background-color: #F2F2F2;
   text-align: left;
-
 }
  
 input[type="text"]#phonenuminput::-webkit-input-placeholder {
@@ -132,11 +130,14 @@ input[type="text"]#phonenuminput::-webkit-input-placeholder {
   margin-top: 30%;
  }
 
+ .registerContainer{
+  display: none;
+}
 
  .otpContainer{
     display: none;
-   
  }
+
  .otpBack{
   cursor: pointer;
   color: #1A1A1A;
