@@ -10,7 +10,7 @@ const Subscription = require('../models/subscribeaction');
 router.post('/create-channel', async(req, res) => {
     var name = req.body.name;
     var thumbnail = req.body.thumbnail;
-    console.log(name, thumbnail);
+    // console.log(name, thumbnail);
     const createChannel = new Channel({
         _id: mongoose.Types.ObjectId(),
         name: name,
@@ -37,7 +37,7 @@ router.post('/subscribe', async(req, res) => {
         });
 
         createSubscription.save().then(result => {
-            console.log(result);
+            // console.log(result);
             res.status(200).json(result);
         })
 
