@@ -5,7 +5,7 @@ const VideoGrid = ({videoInfo}) => {
     let navigate = useNavigate();
     
     const playVideo = (videoId) =>{
-        // console.log(videoId);
+        console.log(videoId);
         navigate(`/watch/${videoId}`);
     }
         return (
