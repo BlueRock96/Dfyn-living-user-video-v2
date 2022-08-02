@@ -7,6 +7,7 @@ const Like = require('../models/like');
 const Channel = require('../models/channel');
 const { result } = require('lodash');
 
+
 router.post('/create-video', async(req, res) => {
     var { title, channel, description, url, thumbnail, category } = req.body;
     var createVideo = new Video({
@@ -91,7 +92,8 @@ router.get('/getvideos', async(req, res) => {
 
 router.get('/getvideo/:id', async(req, res) => {
     try {
-        var id = req.params.id
+        var id = req.params.id;
+        console.log(id);
         var response = {};
         Video.findById(id).populate('channel', 'name thumbnail subscribe').populate('category', '_id').exec().then( async(doc) => {
             if(doc) {
@@ -144,7 +146,7 @@ router.post('/like-video', async(req, res) => {
                 video: videoId,
                 user: userId,
             });
-        createLike.save().then(result => { res.status(200).json({"msg":"Done"})});
+        createLike.save().then(result => { res.status(200).json({"msg":"Liked Successfully"})});
     } catch (error) {
         var response = {};
 		response['status'] = 'error';

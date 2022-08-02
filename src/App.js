@@ -10,6 +10,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [videosList, setVideoList] = useState([])
+  const [videosListCopy, setVideosListCopy] = useState([])
 
   useEffect( () => {
     async function fetchData() {
@@ -23,6 +24,7 @@ function App() {
           if(response.status === 200){
             console.log(parseRes.data);
             setVideoList(parseRes.data)
+            setVideosListCopy(parseRes.data)
           }else{
           }           
       }
@@ -36,7 +38,7 @@ function App() {
 
           <BrowserRouter>
               <Routes>
-                  <Route  exact path= '/' element = {<HomePage videosList = {videosList} setVideoList= {setVideoList}/>}/>
+                  <Route  exact path= '/' element = {<HomePage videosList = {videosList} setVideoList= {setVideoList} videosListCopy={videosListCopy} setVideosListCopy={setVideosListCopy} />}/>
                   <Route  exact path= '/login' element = {<Login/>}/>
                   <Route exact path="/watch/:id" element= {<WatchVideo videoItems = {videosList}/>} />
                   <Route path="*" element={<HomePage/>} />

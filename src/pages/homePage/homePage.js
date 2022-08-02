@@ -5,10 +5,10 @@ import Header from '../../components/header/header';
 import CategorySelect from '../../components/categorySelect/categorySelect';
 import FlipMove from 'react-flip-move';
 import $ from 'jquery'
-const HomePage = ({videosList, setVideoList}) => {
+const HomePage = ({videosList, setVideoList, videosListCopy,  setVideoListCopy }) => {
 
     // const [videosList, setVideoList] = useState([])
-    const [videosListCopy, setVideosListCopy] = useState([])
+    // const [videosListCopy, setVideosListCopy] = useState([])
     const [categoryList,setCategoryList ] = useState([])
 
     // const [categoryList ] = useState([
@@ -21,9 +21,10 @@ const HomePage = ({videosList, setVideoList}) => {
 
     const [activeId, setActiveId] = useState();
     const filterVideos = (category) => {
-        console.log(category);
+        // console.log(videosListCopy);
+        // console.log(category);
         setActiveId(category.id)
-        const filteredVideosList = videosListCopy.filter(d => d.id === category.id);
+        const filteredVideosList = videosListCopy.filter(d => d.categoryId === category.id);
         setVideoList(filteredVideosList);
         if( category.id === 0){
             setVideoList(videosListCopy);
@@ -43,8 +44,8 @@ const HomePage = ({videosList, setVideoList}) => {
               const parseRes =   await response.json()
               // console.log(response);
               if(response.status === 200){
-                console.log(parseRes);
-                setCategoryList(parseRes)
+                console.log(parseRes.data);
+                setCategoryList(parseRes.data)
             }        
           }
           fetchCategory();
@@ -241,9 +242,9 @@ const HomePage = ({videosList, setVideoList}) => {
 
                 <div className= {styles.headerContainer}>
                     <Header
-                    videosList = {videosList}
-                    setVideoList = {setVideoList}
-                    videosListCopy = {videosListCopy} 
+                        videosList = {videosList}
+                        setVideoList = {setVideoList}
+                        videosListCopy = {videosListCopy} 
                     />
 
                     <CategorySelect
