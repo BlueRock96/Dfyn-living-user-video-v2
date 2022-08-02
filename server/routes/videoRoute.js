@@ -91,35 +91,41 @@ router.get('/getvideos', async(req, res) => {
 
 router.get('/getvideo/:id', async(req, res) => {
     try {
+        var id = req.params.id
         var response = {};
-		response['status'] = 'error';
-		response['msg'] = '';
-        Video.findById(id).populate('channel', 'name thumbnail subscribe').populate('category', '_id').exec().then(doc => {
+        Video.findById(id).populate('channel', 'name thumbnail subscribe').populate('category', '_id').exec().then( async(doc) => {
             if(doc) {
                 // res.status(200).json(doc);
-                response.view = doc
-                Video.find({_id: {$nin: id}}).exec().then(doc => {
-                    response.recommended = doc
-                    return res.status(200).json({
-                        id: doc._id,
-                        title: doc.title,
-                        description: doc.description,
-                        url: doc.url,
-                        thumbnail: doc.thumbnail,
-                        channel: doc.channel,
-                        view: doc.total_view,
-                        categoryId : doc.category._id,
-                        uploadDate : doc.created_at
-                    });
+                response.id = doc._id;
+                response.title = doc.title;
+                response.description = doc.description;
+                response.url = doc.url;
+                response.thumbnail = doc.thumbnail;
+                response.channel = doc.channel;
+                response.view = doc.total_view+1;
+                response.categoryId  = doc.category._id;
+                response.uploadDate  = doc.created_at;
+                var featured_videos = await Video.find({_id: {$nin: id}}).populate('channel', 'name').exec();
+                await Video.findOneAndUpdate({_id:id},{total_view : doc.total_view+1}).exec();
+                var featured_videoArray = featured_videos.map(featured_video => {
+                    return {
+                        id : featured_video._id,
+                        title : featured_video.title,
+                        channel : featured_video.channel.name,
+                        view : featured_video.total_view,
+                        uploadDate : featured_video.created_at
+                    }
                 })
+                response.featured_videos = featured_videoArray
+                res.status(200).json(response);
             } else {
                 response.msg = 'Video Not avalible.';
                 return res.status(404).json(response);
             }
         })        
     } catch (error) {
-        console.log(e);
-        return res.status(500).json({error:e})
+        console.log(error);
+        return res.status(500).json({error:error})
     }
 });
 
@@ -131,13 +137,14 @@ router.post('/like-video', async(req, res) => {
 
         var userId = req.body.userid;
         var videoId = req.body.videoid;
+        // Video.findOneAndUpdate({_id:videoId}, {})
 
         const createLike = new Like({
                 _id: mongoose.Types.ObjectId(),
                 video: videoId,
                 user: userId,
             });
-        createLike.save().then(result => { res.status(200).json(result)});
+        createLike.save().then(result => { res.status(200).json({"msg":"Done"})});
     } catch (error) {
         var response = {};
 		response['status'] = 'error';
@@ -151,7 +158,13 @@ router.get('/liked-video', async(req, res) => {
     try {
         var userId = req.body.userid;
         Like.find({user:userId}).exec().then(result => {
-            res.status(200).json(result);
+            res.status(200).json({
+                data: result.map(doc => {
+                    return {
+                        videoId: doc.video
+                    }
+                })
+            });
         })
     } catch (error) {
         console.log(error);

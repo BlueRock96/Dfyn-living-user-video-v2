@@ -16,8 +16,15 @@ router.post('/create-category', async(req, res) => {
 
 router.get('/getCategory', async(req, res) => {
     try {
-        Category.find().exec().then( doc => {
-            res.status(200).json(doc);
+        Category.find().exec().then( docs => {
+            res.status(200).json({
+                data: docs.map(doc => {
+                    return {
+                        id: doc._id,
+                        name: doc.name
+                    }
+                })
+            });
         });
     } catch (error) {
         console.log(error);
