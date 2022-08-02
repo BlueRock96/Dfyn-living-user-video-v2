@@ -23,7 +23,8 @@ router.post('/create-channel', async(req, res) => {
 
 router.post('/subscribe', async(req, res) => {
     try {
-        var usedId = req.body.usedId;
+        console.log("subscribr api", req.body);
+        var userId = req.body.userId;
         var channelId = req.body.channelId;
 
         Channel.findById(channelId).exec().then(doc => {
@@ -33,7 +34,7 @@ router.post('/subscribe', async(req, res) => {
         var createSubscription = new Subscription({
             _id: mongoose.Types.ObjectId(),
             channel: channelId,
-            user: usedId
+            user: userId
         });
 
         createSubscription.save().then(result => {
@@ -46,11 +47,11 @@ router.post('/subscribe', async(req, res) => {
     }
 });
 
-router.get('/subscribed-channel', async(req, res) => {
+router.post('/subscribed-channel', async(req, res) => {
     try {
-        var usedId = req.body.usedId;
+        var userId = req.body.userId;
 
-        Subscription.find({user:usedId}).exec().then(docs => {
+        Subscription.find({user:userId}).exec().then(docs => {
             res.status(200).json({
                 data: docs.map(doc => {
                     return {

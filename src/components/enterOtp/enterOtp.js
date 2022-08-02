@@ -2,9 +2,11 @@ import React, {useState, useEffect} from 'react'
 import styles from './enterOtp.module.css'
 import AuthService from '../authServices/AuthService';
 import { toast } from 'react-toastify';
+import {  useNavigate    } from "react-router-dom";
 const Auth = new AuthService();
 
 const EnterOTP = ({phoneNumber, togglePanel}) => {
+  const navigate = useNavigate();
     const [otp, setOtp] = useState({otp1: "", otp2: "", otp3: "", otp4: ""});
     const [timer, setTimer] = useState(30);
     const [countryCode] = useState('+91'); 
@@ -51,6 +53,7 @@ const EnterOTP = ({phoneNumber, togglePanel}) => {
                     // SHow username at the top 
                   
                     togglePanel();
+                    navigate('/')
                     
 
                 } else{

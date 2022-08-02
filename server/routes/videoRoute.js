@@ -133,6 +133,7 @@ router.get('/getvideo/:id', async(req, res) => {
 
 router.post('/like-video', async(req, res) => {
     try {
+        console.log(req.body);
         var response = {};
 		response['status'] = 'error';
 		response['msg'] = '';

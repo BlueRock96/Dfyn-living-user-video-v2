@@ -6,11 +6,13 @@ import { useParams } from "react-router-dom";
 import _ from "lodash";
 import dateFormat from "dateformat";
 import AuthService from '../authServices/AuthService';
+const Auth = new AuthService();
 
+
+//Todo
 //Unlike Video
 //No Thumbnail
 
-const Auth = new AuthService();
 const WatchVideo = () => {
     const [featuredVideos, setFeaturedVideos] = useState([])
     const { id } = useParams();
@@ -37,8 +39,9 @@ const WatchVideo = () => {
         const response = await fetch(`/like-video`,{
             mode: 'cors', 
             method: "POST",
-            headers: {"Content-Type":"application/x-www-form-urlencoded"},
-            body: {userId: Auth.getUserInfo(), videoid: id}
+            accept: "application/json",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({userId: (Auth.getUserInfo()).id, videoid: id})
           });
           const parseRes =   await response.json()
           if(response.status === 200){
@@ -84,7 +87,9 @@ const WatchVideo = () => {
                                     {dateFormat(videoWatching.uploadDate, "mmmm dS, yyyy")}
                                     </span>
                                 </div>
-                                <button className={styles.followBtn} onClick={e=>likeVideo(id)}>Like</button>
+                                { Auth.loggedIn() && 
+                                    <button className={styles.followBtn} onClick={e=>likeVideo(id)}>Like</button>
+                                }
                             </div>
                             <hr className={styles.hrVideoInfo}/>
 
