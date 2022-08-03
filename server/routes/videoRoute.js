@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const Video = require('../models/videos');
 const Like = require('../models/like');
 const Channel = require('../models/channel');
-const { result } = require('lodash');
+const Subscription = require('../models/subscribeaction');
 
 router.post('/create-video', async(req, res) => {
     var { title, channel, description, url, thumbnail, category } = req.body;
@@ -91,7 +91,8 @@ router.get('/getvideos', async(req, res) => {
 
 router.get('/getvideo/:id', async(req, res) => {
     try {
-        var id = req.params.id
+        var id = req.params.id;
+        var user = req.headers.userId;
         var response = {};
         Video.findById(id).populate('channel', 'name thumbnail subscribe').populate('category', '_id').exec().then( async(doc) => {
             if(doc) {
@@ -105,12 +106,23 @@ router.get('/getvideo/:id', async(req, res) => {
                 response.view = doc.total_view+1;
                 response.categoryId  = doc.category._id;
                 response.uploadDate  = doc.created_at;
+                response.liked = false;
+                response.channelSubscribed = false;
                 var featured_videos = await Video.find({_id: {$nin: id}}).populate('channel', 'name').exec();
+                var likeVideo = await Like.find({user: user,video:id}).exec();
+                var likeChannel = await Subscription.find({channel: doc.channel._id,user:id}).exec();
+                if(likeVideo.length!=0){
+                    response.liked = true;
+                };
+                if(channelSubscribed !=0) {
+                    response.channelSubscribed = true;
+                }
                 await Video.findOneAndUpdate({_id:id},{total_view : doc.total_view+1}).exec();
                 var featured_videoArray = featured_videos.map(featured_video => {
                     return {
                         id : featured_video._id,
                         title : featured_video.title,
+                        thumbnail : featured_video.thumbnail,
                         channel : featured_video.channel.name,
                         view : featured_video.total_view,
                         uploadDate : featured_video.created_at
