@@ -26,21 +26,29 @@ router.post('/subscribe', async(req, res) => {
         console.log("subscribr api", req.body);
         var userId = req.body.userId;
         var channelId = req.body.channelId;
+        var subscribe = req.body.subscribed;
 
         Channel.findById(channelId).exec().then(doc => {
             Channel.findByIdAndUpdate({_id:channelId},{subscribe:doc.subscribe+1}).exec();
         })
+        if(subscribe) {
 
-        var createSubscription = new Subscription({
-            _id: mongoose.Types.ObjectId(),
-            channel: channelId,
-            user: userId
-        });
-
-        createSubscription.save().then(result => {
-            // console.log(result);
-            res.status(200).json(result);
-        })
+            var createSubscription = new Subscription({
+                _id: mongoose.Types.ObjectId(),
+                channel: channelId,
+                user: userId
+            });
+    
+            createSubscription.save().then(result => {
+                // console.log(result);
+                res.status(200).json(result);
+            })
+        } else {
+            Subscription.deleteMany({channel: channelId, user: userId}).exec().then( (result, err) => {
+                if(err) console.log(err) 
+                else res.status(200).json({"msg":"unsubscribed"});
+            })
+        }
 
     } catch (error) {
         console.log(error);

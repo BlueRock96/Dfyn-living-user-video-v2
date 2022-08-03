@@ -115,7 +115,7 @@ router.get('/getvideo/:id', async(req, res) => {
                 if(likeVideo.length!=0){
                     response.liked = true;
                 };
-                if(channelSubscribed !=0) {
+                if(likeChannel !=0) {
                     response.channelSubscribed = true;
                 }
                 await Video.findOneAndUpdate({_id:id},{total_view : doc.total_view+1}).exec();
@@ -151,14 +151,21 @@ router.post('/like-video', async(req, res) => {
 
         var userId = req.body.userid;
         var videoId = req.body.videoid;
+        var like = req.body.likeed;
         // Video.findOneAndUpdate({_id:videoId}, {})
-
-        const createLike = new Like({
-                _id: mongoose.Types.ObjectId(),
-                video: videoId,
-                user: userId,
-            });
-        createLike.save().then(result => { res.status(200).json({"msg":"Liked Successfully"})});
+        if(like) {
+            const createLike = new Like({
+                    _id: mongoose.Types.ObjectId(),
+                    video: videoId,
+                    user: userId,
+                });
+            createLike.save().then(result => { res.status(200).json({"msg":"Liked Successfully"})});
+        } else {
+            Like.deleteMany({video: videoId, user: userId}).exec().then( (result, err) => {
+                if(err) console.log(err) 
+                else res.status(200).json({"msg":"UnLike"});
+            })
+        }
     } catch (error) {
         var response = {};
 		response['status'] = 'error';
