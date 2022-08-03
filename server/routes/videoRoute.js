@@ -7,6 +7,7 @@ const Like = require('../models/like');
 const Channel = require('../models/channel');
 const Subscription = require('../models/subscribeaction');
 
+
 router.post('/create-video', async(req, res) => {
     var { title, channel, description, url, thumbnail, category } = req.body;
     var createVideo = new Video({
@@ -143,6 +144,7 @@ router.get('/getvideo/:id', async(req, res) => {
 
 router.post('/like-video', async(req, res) => {
     try {
+        console.log(req.body);
         var response = {};
 		response['status'] = 'error';
 		response['msg'] = '';
@@ -156,7 +158,7 @@ router.post('/like-video', async(req, res) => {
                 video: videoId,
                 user: userId,
             });
-        createLike.save().then(result => { res.status(200).json({"msg":"Done"})});
+        createLike.save().then(result => { res.status(200).json({"msg":"Liked Successfully"})});
     } catch (error) {
         var response = {};
 		response['status'] = 'error';

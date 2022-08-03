@@ -3,64 +3,55 @@ import VideoGrid from '../../components/videoGrid/videoGrid'
 import styles from "./homePage.module.css";
 import Header from '../../components/header/header';
 import CategorySelect from '../../components/categorySelect/categorySelect';
-import FlipMove from 'react-flip-move';
-import $ from 'jquery'
-const HomePage = ({videosList, setVideoList}) => {
+import {HashLoader} from "react-spinners";
 
-    // const [videosList, setVideoList] = useState([])
-    const [videosListCopy, setVideosListCopy] = useState([])
+ 
+
+const HomePage = ({videosList, setVideoList, videosListCopy,  setVideoListCopy }) => {
+
+    let [loading, setLoading] = useState(true);
+    const toggleLoaderOverlay = () =>{
+        setLoading(false)
+    }
     const [categoryList,setCategoryList ] = useState([])
-
-    // const [categoryList ] = useState([
-    //     {id: 1, label: 'Music', categoryId: 1 },{id: 2, label: 'Gaming', categoryId: 2},
-    //     {id: 3, label: 'Trailers', categoryId: 1}, {id: 4, label: 'T-Series', categoryId: 2},
-    //     {id: 5, label: 'Recently Uploaded', categoryId: 1},{id: 6, label: 'Graphic Design', categoryId: 2},
-    //     {id: 7, label: 'Shopping', categoryId: 1},{id: 8, label: 'Russia War', categoryId: 2},
-    //     {id: 9, label: 'Nifty 50', categoryId: 1}, {id: 10, label: 'Sony Music', categoryId: 2}])
-
-
     const [activeId, setActiveId] = useState();
     const filterVideos = (category) => {
-        console.log(category);
         setActiveId(category.id)
-        const filteredVideosList = videosListCopy.filter(d => d.id === category.id);
+        const filteredVideosList = videosListCopy.filter(d => d.categoryId === category.id);
         setVideoList(filteredVideosList);
         if( category.id === 0){
             setVideoList(videosListCopy);
         }
-            
     }
 
         useEffect( () => {
-
-
         async function fetchCategory() {
-            const response = await fetch(`http://localhost:7001/getCategory`,{
+            const response = await fetch(`/getCategory`,{
                 mode: 'cors', 
                 method: "GET",
-                // headers: {"Content-Type":"application/x-www-form-urlencoded"},
               });
               const parseRes =   await response.json()
-              // console.log(response);
               if(response.status === 200){
-                console.log(parseRes);
-                setCategoryList(parseRes)
+                setCategoryList(parseRes.data)
             }        
           }
           fetchCategory();
+          
+         setTimeout(toggleLoaderOverlay, 1500);
+
+      
       }, []);
 
 
-    
+
+
+
     // useEffect( () => {
-
-
     //     async function fetchData() {
     //         const response = await fetch(`http://localhost:7001/getvideos`,{
     //             mode: 'cors', 
     //             method: "GET",
     //             // headers: {"Content-Type":"application/x-www-form-urlencoded"},
-             
     //           });
     //           const parseRes =   await response.json()
     //           // console.log(response);
@@ -69,7 +60,6 @@ const HomePage = ({videosList, setVideoList}) => {
     //             setVideoList(parseRes.data)
     //             setVideosListCopy(parseRes.data)
     //           }else{
-
     //           }           
     //       }
     //       fetchData();
@@ -237,31 +227,38 @@ const HomePage = ({videosList, setVideoList}) => {
             
     return (
             <div className='app'>
+
+
                 <div className={styles.container}>
-
-                <div className= {styles.headerContainer}>
-                    <Header
-                    videosList = {videosList}
-                    setVideoList = {setVideoList}
-                    videosListCopy = {videosListCopy} 
-                    />
-
-                    <CategorySelect
-                        categoryList = {categoryList}
-                        filterVideos = {filterVideos}
-                        activeId = {activeId}
-
+                    <div className= {styles.headerContainer}>
+                        <Header
+                            videosList = {videosList}
+                            setVideoList = {setVideoList}
+                            videosListCopy = {videosListCopy} 
                         />
-                </div>
+                        <CategorySelect
+                            categoryList = {categoryList}
+                            filterVideos = {filterVideos}
+                            activeId = {activeId}
+                            />
+                    </div>
+                    <div className={styles.A1}>
 
-
-                <div className={styles.A1}>
-                                {videosList.map((videoInfo) =>
-                                    <VideoGrid videoInfo={videoInfo}/>
-                                    )}
-                </div>
-
-
+                        {loading ?                     
+                        <div className={styles.loaderWrapper}>
+                            <HashLoader color={"red"} speedMultiplier = {1} loading={loading}  size={50} />
+                        </div>
+                        :
+                            <> 
+                                    {videosList.map((videoInfo) =>
+                                        <VideoGrid 
+                                        key= {videoInfo.id}
+                                            videoInfo={videoInfo}
+                                            />
+                                        )}
+                            </>
+                        }
+                    </div>
                 </div>
             </div>
         )

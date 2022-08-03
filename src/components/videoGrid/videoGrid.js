@@ -1,12 +1,33 @@
 import React from 'react'
 import styles from "./videoGrid.module.css";
 import {  useNavigate    } from "react-router-dom";
+import AuthService from '../authServices/AuthService';
+const Auth = new AuthService();
+
+//Unfollow Channel
+
 const VideoGrid = ({videoInfo}) => {
+    console.log("videgrid comp",  videoInfo);
     let navigate = useNavigate();
     
     const playVideo = (videoId) =>{
         console.log(videoId);
         navigate(`/watch/${videoId}`);
+    }
+    const followChannel = async (videoInfo) =>{
+        console.log(videoInfo);
+        const response = await fetch(`/subscribe`,{
+            mode: 'cors', 
+            method: "POST",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({userId: (Auth.getUserInfo()).id, channelId: videoInfo.channel._id})
+          });
+          const parseRes =   await response.json()
+          if(response.status === 200){
+            console.log(parseRes);
+          }else{
+          }  
+
     }
         return (
             <>
@@ -22,12 +43,17 @@ const VideoGrid = ({videoInfo}) => {
                     
                     <div className = {styles.videoInfoContainer}>
                         <div className={styles.channelLogoWrapper}>
-                            <img src = {videoInfo.channelThumbnail}
+                            <img src = {videoInfo.channel.thumbnail}
                                 alt = "Channel Logo" />
                         </div>
                         <div className={styles.titleFollowContainer}>
                                 <span> {videoInfo.title}</span>
-                                <button className={styles.followBtn}>Follow</button>
+                                { Auth.loggedIn() && 
+                                <button className={styles.followBtn} 
+                                        onClick = {e=>followChannel(videoInfo)}>
+                                    {videoInfo.channel.subscribed ? "Following" : "Follow"} 
+                                </button>
+                                }
                         </div>
                     </div>
                 </div>

@@ -14,8 +14,8 @@ const mongoose = require('mongoose');
 
 mongoose.connect(`mongodb+srv://root:${process.env.mongoPW}@cluster0.dwfid.mongodb.net/?retryWrites=true&w=majority`)
 
-
 //init app
+
 //set the template engine
 app.set("view engine", "ejs");
 app.use(cors())
@@ -25,7 +25,7 @@ app.use(channelRoute);
 app.use(videoRoute);
 app.use(categoryRoute);
 //fetch data from the request
-app.use(express.urlencoded({ extended: false }));
+// app.use(express.urlencoded({ extended: false }));
 //static folder
 // app.use(express.static(path.resolve(__dirname, "public")));
 //default pageload

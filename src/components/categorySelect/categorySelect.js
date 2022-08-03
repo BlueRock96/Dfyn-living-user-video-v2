@@ -12,7 +12,7 @@ const CategorySelect = ( {activeId, categoryList , filterVideos}) => {
                         <div className= {`${styles.categoryContainer} ${styles.disableScrollbars}`}>
                                 <button  onClick={e=>filterVideos({id: 0})} className={`${styles.categoryBtn} ${styles.categoryBtnFirst}`}>All</button>
                                 {categoryList.map((category) =>
-                                    <button onClick={e=>filterVideos(category)} className={styles.categoryBtn}  
+                                    <button key={category.id} onClick={e=>filterVideos(category)} className={styles.categoryBtn}  
                                     style={activeId === category.id ? selected : notSelected}>
                                     {category.name}</button>
                                 )}
