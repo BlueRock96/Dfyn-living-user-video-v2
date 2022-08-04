@@ -19,7 +19,7 @@ const VideoGrid = ({videoInfo}) => {
         const response = await fetch(`/subscribe`,{
             mode: 'cors', 
             method: "POST",
-            headers: {"Content-Type":"application/json"},
+            headers: {"Content-Type":"application/json" , userId: (Auth.getUserInfo()).id},
             body: JSON.stringify({userId: (Auth.getUserInfo()).id, channelId: videoInfo.channel._id})
           });
           const parseRes =   await response.json()

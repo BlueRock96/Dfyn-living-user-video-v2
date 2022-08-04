@@ -46,7 +46,7 @@ function App() {
       const response = await fetch(`/subscribed-channel`,{
         mode: 'cors', 
         method: "POST",
-        headers: {"Content-Type":"application/json"},
+        headers: {"Content-Type":"application/json", userId: (Auth.getUserInfo()).id },
         body: JSON.stringify({userId: (Auth.getUserInfo()).id})
       });
       const parseRes =   await response.json()

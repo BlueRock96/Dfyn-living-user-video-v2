@@ -40,7 +40,7 @@ const WatchVideo = () => {
             mode: 'cors', 
             method: "POST",
             accept: "application/json",
-            headers: {"Content-Type":"application/json"},
+            headers: {"Content-Type":"application/json" , userId: (Auth.getUserInfo()).id},
             body: JSON.stringify({userId: (Auth.getUserInfo()).id, videoid: id})
           });
           const parseRes =   await response.json()
