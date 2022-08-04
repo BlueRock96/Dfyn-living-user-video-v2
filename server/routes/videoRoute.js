@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const Video = require('../models/videos');
 const Like = require('../models/like');
 const Channel = require('../models/channel');
-const { result } = require('lodash');
+const Subscription = require('../models/subscribeaction');
 
 
 router.post('/create-video', async(req, res) => {
@@ -93,7 +93,7 @@ router.get('/getvideos', async(req, res) => {
 router.get('/getvideo/:id', async(req, res) => {
     try {
         var id = req.params.id;
-        console.log(id);
+        var user = req.headers.userId;
         var response = {};
         Video.findById(id).populate('channel', 'name thumbnail subscribe').populate('category', '_id').exec().then( async(doc) => {
             if(doc) {
@@ -107,12 +107,23 @@ router.get('/getvideo/:id', async(req, res) => {
                 response.view = doc.total_view+1;
                 response.categoryId  = doc.category._id;
                 response.uploadDate  = doc.created_at;
+                response.liked = false;
+                response.channelSubscribed = false;
                 var featured_videos = await Video.find({_id: {$nin: id}}).populate('channel', 'name').exec();
+                var likeVideo = await Like.find({user: user,video:id}).exec();
+                var likeChannel = await Subscription.find({channel: doc.channel._id,user:id}).exec();
+                if(likeVideo.length!=0){
+                    response.liked = true;
+                };
+                if(likeChannel !=0) {
+                    response.channelSubscribed = true;
+                }
                 await Video.findOneAndUpdate({_id:id},{total_view : doc.total_view+1}).exec();
                 var featured_videoArray = featured_videos.map(featured_video => {
                     return {
                         id : featured_video._id,
                         title : featured_video.title,
+                        thumbnail : featured_video.thumbnail,
                         channel : featured_video.channel.name,
                         view : featured_video.total_view,
                         uploadDate : featured_video.created_at
@@ -140,14 +151,21 @@ router.post('/like-video', async(req, res) => {
 
         var userId = req.body.userid;
         var videoId = req.body.videoid;
+        var like = req.body.likeed;
         // Video.findOneAndUpdate({_id:videoId}, {})
-
-        const createLike = new Like({
-                _id: mongoose.Types.ObjectId(),
-                video: videoId,
-                user: userId,
-            });
-        createLike.save().then(result => { res.status(200).json({"msg":"Liked Successfully"})});
+        if(like) {
+            const createLike = new Like({
+                    _id: mongoose.Types.ObjectId(),
+                    video: videoId,
+                    user: userId,
+                });
+            createLike.save().then(result => { res.status(200).json({"msg":"Liked Successfully"})});
+        } else {
+            Like.deleteMany({video: videoId, user: userId}).exec().then( (result, err) => {
+                if(err) console.log(err) 
+                else res.status(200).json({"msg":"UnLike"});
+            })
+        }
     } catch (error) {
         var response = {};
 		response['status'] = 'error';
