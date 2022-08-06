@@ -55,6 +55,7 @@
     height: 50px;
     justify-content: space-between;
     margin: 12px 0px 15px 0px;
+    padding-right: 26px;
 }
 .logoDescriptionContainer{
     display: flex;
@@ -67,6 +68,7 @@
     flex-direction: column;
     min-height: 160px;
     justify-content: space-between;
+    width: 100%;
 }
 .channelInfoContainer{
     display: flex;
@@ -85,7 +87,7 @@
     background-color: transparent;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-    width: 89px;
+    width: 93px;
     height: 37px;
 }
 .followBtn:hover{
@@ -179,6 +181,11 @@
     margin-top: 15px;
 }
 
+.descCont1{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
 
 @media screen and (max-width: 480px){
 

@@ -7,8 +7,7 @@ import {HashLoader} from "react-spinners";
 
  
 
-const HomePage = ({videosList, setVideoList, videosListCopy,  setVideoListCopy }) => {
-
+const HomePage = ({fetchData, videosList, setVideoList, videosListCopy,  setVideoListCopy }) => {
     let [loading, setLoading] = useState(true);
     const toggleLoaderOverlay = () =>{
         setLoading(false)
@@ -42,28 +41,6 @@ const HomePage = ({videosList, setVideoList, videosListCopy,  setVideoListCopy }
       
       }, []);
 
-
-
-
-
-    // useEffect( () => {
-    //     async function fetchData() {
-    //         const response = await fetch(`http://localhost:7001/getvideos`,{
-    //             mode: 'cors', 
-    //             method: "GET",
-    //             // headers: {"Content-Type":"application/x-www-form-urlencoded"},
-    //           });
-    //           const parseRes =   await response.json()
-    //           // console.log(response);
-    //           if(response.status === 200){
-    //             console.log(parseRes.data);
-    //             setVideoList(parseRes.data)
-    //             setVideosListCopy(parseRes.data)
-    //           }else{
-    //           }           
-    //       }
-    //       fetchData();
-    //   }, []);
 
 
 
@@ -252,8 +229,9 @@ const HomePage = ({videosList, setVideoList, videosListCopy,  setVideoListCopy }
                             <> 
                                     {videosList.map((videoInfo) =>
                                         <VideoGrid 
-                                        key= {videoInfo.id}
+                                            key= {videoInfo.id}
                                             videoInfo={videoInfo}
+                                            fetchData = {fetchData}
                                             />
                                         )}
                             </>

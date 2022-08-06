@@ -1,10 +1,9 @@
 
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import styles from './login.module.css'
 import EnterOTP from '../enterOtp/enterOtp'
 import Register from '../register/register';
 import { ToastContainer, toast } from 'react-toastify';
-import { useParams , useNavigate    } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import AuthService from '../authServices/AuthService';
 import validator from 'validator';
@@ -13,7 +12,6 @@ import { FaArrowLeft, FaTimes } from 'react-icons/fa';
 const Auth = new AuthService();
 
 const Login = ({panelVisible, togglePanel}) => {
-    let navigate = useNavigate();
     const divStyleOpen = {
         transform: "translateX(100%)"
       };
@@ -52,9 +50,6 @@ const Login = ({panelVisible, togglePanel}) => {
         $("#registerContainer").slideDown("slow");
     }
 
-
-    
-
     const onSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -66,29 +61,16 @@ const Login = ({panelVisible, togglePanel}) => {
                 toast.error("Invalid Mobile Number");
                 return;                
             }
-
-
-            // $("#loginContainer").slideUp("slow");
-            // $("#otpContainer").slideDown("slow");
-
             Auth.sendOtp( loginInfo.phoneNumber, loginInfo.countryCode)
             .then(res => {
-                console.log(res);
                 if(res.status === true){
                        $("#loginContainer").slideUp("slow");
                        $("#otpContainer").slideDown("slow");
                 }else{
                     toast.error(res.message);
                 }
-                    // navigate('/');
-                    //  eslint-disable-next-line react-hooks/exhaustive-deps
-                    // toast.success('Login successful.');
-                    // $("#loginContainer").slideUp("slow");
-                    // $("#otpContainer").slideDown("slow");
-
             })
             .catch(res => {
-                // console.log(res);
                     toast.error(res.message);
             })
         }

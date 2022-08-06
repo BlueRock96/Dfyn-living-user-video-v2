@@ -6,27 +6,24 @@ const Auth = new AuthService();
 
 //Unfollow Channel
 
-const VideoGrid = ({videoInfo}) => {
-    console.log("videgrid comp",  videoInfo);
+const VideoGrid = ({videoInfo, fetchData}) => {
     let navigate = useNavigate();
     
     const playVideo = (videoId) =>{
-        console.log(videoId);
         navigate(`/watch/${videoId}`);
     }
     const followChannel = async (videoInfo) =>{
-        console.log(videoInfo);
         const response = await fetch(`/subscribe`,{
             mode: 'cors', 
             method: "POST",
             headers: {"Content-Type":"application/json" , userId: (Auth.getUserInfo()).id},
-            body: JSON.stringify({userId: (Auth.getUserInfo()).id, channelId: videoInfo.channel._id})
+            body: JSON.stringify({userId: (Auth.getUserInfo()).id, channelId: videoInfo.channel._id, 
+                                    subscribed: !videoInfo.channel.subscribed})
           });
-          const parseRes =   await response.json()
+        //   const parseRes =   await response.json()
           if(response.status === 200){
-            console.log(parseRes);
-          }else{
-          }  
+            fetchData();
+          }
 
     }
         return (

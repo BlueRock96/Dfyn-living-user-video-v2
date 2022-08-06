@@ -93,7 +93,8 @@ router.get('/getvideos', async(req, res) => {
 router.get('/getvideo/:id', async(req, res) => {
     try {
         var id = req.params.id;
-        var user = req.headers.userId;
+        var user = req.headers.userid;
+        // console.log(req.headers);
         var response = {};
         Video.findById(id).populate('channel', 'name thumbnail subscribe').populate('category', '_id').exec().then( async(doc) => {
             if(doc) {
@@ -111,11 +112,13 @@ router.get('/getvideo/:id', async(req, res) => {
                 response.channelSubscribed = false;
                 var featured_videos = await Video.find({_id: {$nin: id}}).populate('channel', 'name').exec();
                 var likeVideo = await Like.find({user: user,video:id}).exec();
-                var likeChannel = await Subscription.find({channel: doc.channel._id,user:id}).exec();
-                if(likeVideo.length!=0){
+                var likeChannel = await Subscription.find({channel: doc.channel._id,user:user}).exec();
+                console.log('video like',likeVideo);
+                console.log('chan like',likeChannel);
+                if(likeVideo.length!==0){
                     response.liked = true;
                 };
-                if(likeChannel !=0) {
+                if(likeChannel.length !==0) {
                     response.channelSubscribed = true;
                 }
                 await Video.findOneAndUpdate({_id:id},{total_view : doc.total_view+1}).exec();
@@ -144,14 +147,14 @@ router.get('/getvideo/:id', async(req, res) => {
 
 router.post('/like-video', async(req, res) => {
     try {
-        console.log(req.body);
+        // console.log(req.body);
         var response = {};
 		response['status'] = 'error';
 		response['msg'] = '';
 
-        var userId = req.body.userid;
-        var videoId = req.body.videoid;
-        var like = req.body.likeed;
+        var userId = req.body.userId;
+        var videoId = req.body.videoId;
+        var like = req.body.liked;
         // Video.findOneAndUpdate({_id:videoId}, {})
         if(like) {
             const createLike = new Like({
@@ -159,10 +162,10 @@ router.post('/like-video', async(req, res) => {
                     video: videoId,
                     user: userId,
                 });
-            createLike.save().then(result => { res.status(200).json({"msg":"Liked Successfully"})});
+            createLike.save().then(result => { res.status(200).json({"msg": result})});
         } else {
             Like.deleteMany({video: videoId, user: userId}).exec().then( (result, err) => {
-                if(err) console.log(err) 
+                if(err) console.log(err);
                 else res.status(200).json({"msg":"UnLike"});
             })
         }

@@ -13,7 +13,6 @@ export default class AuthService {
 
     sendOtp(phoneNumber, countryCode )
     {  
-        //  console.log(phoneNumber,countryCode )
         return this.fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/resendotp`, {
             mode: 'cors', 
             method: "POST",
@@ -48,7 +47,6 @@ export default class AuthService {
 
     resendOtp(phoneNumber, country_code )
     {  
-        //  console.log(phoneNumber,country_code )
         return this.fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/resendotp`, {
             mode: 'cors', 
             method: "POST",
@@ -124,7 +122,6 @@ export default class AuthService {
 
     logout() {
         // Clear user token and profile data from localStorage
-        console.log('logout called');
         localStorage.removeItem('_uToken');
         localStorage.removeItem('_uInfo');
     }
@@ -155,11 +152,9 @@ export default class AuthService {
 
     _checkStatus(response) {
         // raises an error in case response status is not a success
-        console.log(response);
         if (response.status >= 200 && response.status < 300) {
             return response
         } else {
-            console.log(response);
             var error = new Error(response.message)
             error.response = response
             throw error
