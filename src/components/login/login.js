@@ -85,7 +85,6 @@ const Login = ({panelVisible, togglePanel}) => {
         <>
             <div >
 
-
                 <div className={`${styles.panelWrap}`} style={ panelVisible ? divStyleOpen : divStyleClose}>
                 <div className = {styles.panel}>
                 <span className={styles.loginCloseBtn} onClick= {togglePanel}><FaTimes/></span>

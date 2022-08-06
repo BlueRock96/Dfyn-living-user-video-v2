@@ -7,7 +7,7 @@ import dateFormat from "dateformat";
 import AuthService from '../authServices/AuthService';
 const Auth = new AuthService();
 
-const WatchVideo = () => {
+const WatchVideo = ({ panelVisible,    togglePanel }) => {
     const activeBtnCss =     {background: "#9B7D6A", color: "#FFFFFF", border: "1.4px solid rgba(0, 0, 0, 0.1)"}
     const inactiveBtnCss = {color: "#B19D97",  "backgroundColor": "transparent", border: "1.4px solid #B19D97" };
     const [featuredVideos, setFeaturedVideos] = useState([])
@@ -22,7 +22,7 @@ const WatchVideo = () => {
         const response = await fetch(`/getvideo/${_id}`,{
             mode: 'cors', 
             method: "GET",
-            headers: {"Content-Type":"application/json" , userId: (Auth.getUserInfo()).id},
+            headers: {"Content-Type":"application/json" , userId: Auth.loggedIn() ? (Auth.getUserInfo()).id: null},
           });
           const parseRes =   await response.json()
           if(response.status === 200){
@@ -33,6 +33,10 @@ const WatchVideo = () => {
       }
 
       const likeVideo = async (id,videoWatching) => {
+        if(!Auth.loggedIn()){
+            togglePanel();
+        }else{
+
         const response = await fetch(`/like-video`,{
             mode: 'cors', 
             method: "POST",
@@ -44,9 +48,14 @@ const WatchVideo = () => {
           if(response.status === 200){
             setVideoWatching({ ...videoWatching, liked: !videoWatching.liked})
           }        
-      }
+         }
+        }
 
       const followChannel = async (videoWatching) =>{
+              
+        if(!Auth.loggedIn()){
+            togglePanel();
+        }else{
         const response = await fetch(`/subscribe`,{
             mode: 'cors', 
             method: "POST",
@@ -59,6 +68,7 @@ const WatchVideo = () => {
           if(response.status === 200){
             setVideoWatching({ ...videoWatching, channelSubscribed: !videoWatching.channelSubscribed})
           }
+        }
     }
 
 
@@ -70,7 +80,11 @@ const WatchVideo = () => {
         <>
         {videoWatching &&
             <div className={styles.body}>
-                    <Header />
+                    <Header 
+                     panelVisible = {panelVisible}
+                     togglePanel = {togglePanel}
+                     
+                     />
                     <div className={styles.container}>
                         <div className={styles.watchVideoContainer}>
                         <div className={styles.videoPlayerContainer}>
@@ -98,9 +112,7 @@ const WatchVideo = () => {
                                     {dateFormat(videoWatching.uploadDate, "mmmm dS, yyyy")}
                                     </span>
                                 </div>
-                                { Auth.loggedIn() && 
                                     <button className={styles.followBtn} style={  videoWatching.liked ? activeBtnCss : inactiveBtnCss} onClick={e=>likeVideo(id, videoWatching)}>{ videoWatching.liked? 'Liked' : 'Like'}</button>
-                                }
                             </div>
                             <hr className={styles.hrVideoInfo}/>
 
@@ -115,6 +127,7 @@ const WatchVideo = () => {
                                             <span className={styles.channelName}>{videoWatching.channel.name}</span> 
                                             <span className={styles.subscriberCount}>{videoWatching.channel.subscribe} subscribers</span> 
                                         </div>
+
                                         <button className={styles.followBtn} 
                                                 onClick = { e => followChannel(videoWatching)} 
                                                 style={ videoWatching.channelSubscribed ? activeBtnCss : inactiveBtnCss}>

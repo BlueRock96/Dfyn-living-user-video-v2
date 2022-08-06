@@ -7,7 +7,11 @@ import {HashLoader} from "react-spinners";
 
  
 
-const HomePage = ({fetchData, videosList, setVideoList, videosListCopy,  setVideoListCopy }) => {
+const HomePage = ({fetchData, videosList, setVideoList, videosListCopy,  setVideoListCopy, togglePanel, panelVisible }) => {
+
+
+
+
     let [loading, setLoading] = useState(true);
     const toggleLoaderOverlay = () =>{
         setLoading(false)
@@ -56,6 +60,8 @@ const HomePage = ({fetchData, videosList, setVideoList, videosListCopy,  setVide
                             videosList = {videosList}
                             setVideoList = {setVideoList}
                             videosListCopy = {videosListCopy} 
+                            panelVisible = {panelVisible}
+                            togglePanel = {togglePanel}
                         />
                         <CategorySelect
                             categoryList = {categoryList}
@@ -75,7 +81,9 @@ const HomePage = ({fetchData, videosList, setVideoList, videosListCopy,  setVide
                                         <VideoGrid 
                                             key= {videoInfo.id}
                                             videoInfo={videoInfo}
-                                            fetchData = {fetchData}
+                                            togglePanel = {togglePanel}
+                                            videosList = {videosList} 
+                                            setVideoList = {setVideoList}
                                             />
                                         )}
                             </>

@@ -47,7 +47,7 @@ const EnterOTP = ({phoneNumber, togglePanel}) => {
                     Auth.setToken(res.accessToken)
                     Auth.setUserInfo(JSON.stringify(res.app_user));
                     togglePanel();
-                    navigate('/')
+                    // navigate('/')
                     
 
                 } else{

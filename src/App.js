@@ -10,6 +10,16 @@ import AuthService from './components/authServices/AuthService';
 const Auth = new AuthService();
 
 function App() {
+
+  
+  const [panelVisible, setPanelVisible] = useState(true);
+  const togglePanel = () =>{
+      setPanelVisible(!panelVisible);
+  }
+
+
+
+
   const [videosList, setVideoList] = useState([])
   const [videosListCopy, setVideosListCopy] = useState([])
   // const [subscribedChannels, setSubscribedChannels] = useState([])
@@ -26,7 +36,8 @@ function App() {
       if(response.status === 200){
         setVideoList(parseRes.data)
         setVideosListCopy(parseRes.data)
-        getSubscribedChannels();
+        if (Auth.loggedIn())  
+            getSubscribedChannels();
         setFetch_(true)
       }else{
       }           
@@ -61,9 +72,16 @@ function App() {
 
           <BrowserRouter>
               <Routes>
-                  <Route  exact path= '/' element = {<HomePage videosList = {videosList} setVideoList= {setVideoList} videosListCopy={videosListCopy} setVideosListCopy={setVideosListCopy} fetchData = {fetchData} />}/>
+                  <Route  exact path= '/' element = {
+                        <HomePage videosList = {videosList} setVideoList= {setVideoList} 
+                        videosListCopy={videosListCopy} setVideosListCopy={setVideosListCopy} 
+                        fetchData = {fetchData} 
+                        panelVisible = {panelVisible} togglePanel = {togglePanel}/>}/>
                   <Route  exact path= '/login' element = {<Login/>}/>
-                  <Route exact path="/watch/:id" element= {<WatchVideo videoItems = {videosList}/>} />
+                  <Route exact path="/watch/:id" element= {
+                            <WatchVideo 
+                             panelVisible = {panelVisible}
+                            togglePanel = {togglePanel}/>} />
                   <Route path="*" element={<HomePage />} />
 
                   {/* <Route  path="/dashboard" component={DashboardVideo} /> */}

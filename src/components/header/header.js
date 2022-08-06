@@ -6,11 +6,8 @@ import Login from '../login/login';
 import AuthService from '../authServices/AuthService';
 const Auth = new AuthService();
 
-const Header = ({videosList, setVideoList, videosListCopy}) => {
-    const [panelVisible, setPanelVisible] = useState(true);
-    const togglePanel = () =>{
-        setPanelVisible(!panelVisible);
-    }
+const Header = ({videosList, setVideoList, videosListCopy, panelVisible, togglePanel}) => {
+
     const overlayHide = { display: "none" };
     const overlayShow = {display: "block" };
 

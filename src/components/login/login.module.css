@@ -146,6 +146,7 @@ input[type="text"]#phonenuminput::-webkit-input-placeholder {
 
 .loginCloseBtn{
   color: #333333;
+  cursor: pointer;
 }
 
 

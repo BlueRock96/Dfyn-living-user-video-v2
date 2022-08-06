@@ -111,15 +111,17 @@ router.get('/getvideo/:id', async(req, res) => {
                 response.liked = false;
                 response.channelSubscribed = false;
                 var featured_videos = await Video.find({_id: {$nin: id}}).populate('channel', 'name').exec();
-                var likeVideo = await Like.find({user: user,video:id}).exec();
-                var likeChannel = await Subscription.find({channel: doc.channel._id,user:user}).exec();
-                // console.log('video like',likeVideo);
-                // console.log('chan like',likeChannel);
-                if(likeVideo.length!==0){
-                    response.liked = true;
-                };
-                if(likeChannel.length !==0) {
-                    response.channelSubscribed = true;
+                if(user!==null && user!=='null'){
+                    var likeVideo = await Like.find({user: user,video:id}).exec();
+                    var likeChannel = await Subscription.find({channel: doc.channel._id,user:user}).exec();
+                    // console.log('video like',likeVideo);
+                    // console.log('chan like',likeChannel);
+                    if(likeVideo.length!==0){
+                        response.liked = true;
+                    };
+                    if(likeChannel.length !==0) {
+                        response.channelSubscribed = true;
+                    }
                 }
                 await Video.findOneAndUpdate({_id:id},{total_view : doc.total_view+1}).exec();
                 var featured_videoArray = featured_videos.map(featured_video => {

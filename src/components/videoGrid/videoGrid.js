@@ -6,25 +6,33 @@ const Auth = new AuthService();
 
 //Unfollow Channel
 
-const VideoGrid = ({videoInfo, fetchData}) => {
+const VideoGrid = ({videoInfo,  togglePanel, videosList, setVideoList}) => {
     let navigate = useNavigate();
     
     const playVideo = (videoId) =>{
         navigate(`/watch/${videoId}`);
     }
     const followChannel = async (videoInfo) =>{
-        const response = await fetch(`/subscribe`,{
-            mode: 'cors', 
-            method: "POST",
-            headers: {"Content-Type":"application/json" , userId: (Auth.getUserInfo()).id},
-            body: JSON.stringify({userId: (Auth.getUserInfo()).id, channelId: videoInfo.channel._id, 
-                                    subscribed: !videoInfo.channel.subscribed})
-          });
-        //   const parseRes =   await response.json()
-          if(response.status === 200){
-            fetchData();
-          }
 
+        if(!Auth.loggedIn()){
+            togglePanel();
+        }else{
+            const response = await fetch(`/subscribe`,{
+                mode: 'cors', 
+                method: "POST",
+                headers: {"Content-Type":"application/json" , userId: (Auth.getUserInfo()).id},
+                body: JSON.stringify({userId: (Auth.getUserInfo()).id, channelId: videoInfo.channel._id, 
+                                        subscribed: !videoInfo.channel.subscribed})
+              });
+            //   const parseRes =   await response.json()
+              if(response.status === 200){
+                    let videosListCopy = [...videosList];
+                    await videosListCopy.forEach(video => {
+                        if(video.channel._id === videoInfo.channel._id) video.channel.subscribed = !video.channel.subscribed;
+                    });
+                    setVideoList(videosListCopy)
+              }
+        }
     }
         return (
             <>
@@ -45,12 +53,10 @@ const VideoGrid = ({videoInfo, fetchData}) => {
                         </div>
                         <div className={styles.titleFollowContainer}>
                                 <span> {videoInfo.title}</span>
-                                { Auth.loggedIn() && 
                                 <button className={styles.followBtn} 
                                         onClick = {e=>followChannel(videoInfo)}>
                                     {videoInfo.channel.subscribed ? "Following" : "Follow"} 
                                 </button>
-                                }
                         </div>
                     </div>
                 </div>
