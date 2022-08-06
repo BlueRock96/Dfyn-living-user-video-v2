@@ -113,7 +113,7 @@ const WatchVideo = () => {
                                     <div className={styles.descCont1}>
                                         <div className={styles.channelInfoContainer}>
                                             <span className={styles.channelName}>{videoWatching.channel.name}</span> 
-                                            <span className={styles.subscriberCount}>{videoWatching.channel.subscribe}M subscribers</span> 
+                                            <span className={styles.subscriberCount}>{videoWatching.channel.subscribe} subscribers</span> 
                                         </div>
                                         <button className={styles.followBtn} 
                                                 onClick = { e => followChannel(videoWatching)} 
@@ -121,7 +121,7 @@ const WatchVideo = () => {
                                           {videoWatching.channelSubscribed ? "Following": "Follow"} </button>
                                     </div>
                                     <div className={styles.videoInfoContainer}>
-                                        <span>
+                                        <span style={{whiteSpace: "pre-line"}}>
                                                 {videoWatching.description}
                                         </span>
                                         <p className={styles.showMoreBtn}> Show More</p> 
