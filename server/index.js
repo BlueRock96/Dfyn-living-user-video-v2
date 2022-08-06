@@ -29,14 +29,14 @@ app.use(categoryRoute);
 //static folder
 // app.use(express.static(path.resolve(__dirname, "public")));
 //default pageload
-// app.use(express.static(path.join(__dirname, "..", "build")));
+app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
 
 
 
-// app.use((req, res, next) => {
-//   res.sendFile(path.join(__dirname, "..", "build", "index.html"));
-// });
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, "..", "build", "index.html"));
+});
 
 
 

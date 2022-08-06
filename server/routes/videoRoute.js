@@ -113,8 +113,8 @@ router.get('/getvideo/:id', async(req, res) => {
                 var featured_videos = await Video.find({_id: {$nin: id}}).populate('channel', 'name').exec();
                 var likeVideo = await Like.find({user: user,video:id}).exec();
                 var likeChannel = await Subscription.find({channel: doc.channel._id,user:user}).exec();
-                console.log('video like',likeVideo);
-                console.log('chan like',likeChannel);
+                // console.log('video like',likeVideo);
+                // console.log('chan like',likeChannel);
                 if(likeVideo.length!==0){
                     response.liked = true;
                 };
